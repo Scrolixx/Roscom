@@ -1,658 +1,238 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Роскомнадзор – Официальный сайт (демо)</title>
-  <style>
-    /* Общие стили и цветовая палитра */
-    body {
-      font-family: 'Open Sans', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      background-color: #fff;
-      line-height: 1.6;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin: 0;
-      font-weight: 700;
-    }
-    a {
-      color: #2B4C9B; /* синий цвет ссылок */
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    a:hover {
-      color: #1a2f5d;
-      text-decoration: underline;
-    }
-    /* Контейнер для центрирования контента и отступы */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 15px;
-    }
-
-    /* Шапка сайта */
-    header {
-      background: #fff;
-      padding: 15px 0;
-      border-bottom: 4px solid #2B4C9B; /* синяя полоска снизу шапки */
-      position: relative;
-    }
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
-    .header-top img {
-      width: 70px;
-      margin-right: 15px;
-    }
-    .header-top .title {
-      font-size: 1.1em;
-      text-transform: uppercase;
-      color: #222;
-    }
-    .header-top .title .short-name {
-      font-weight: 400;
-      font-size: 1em;
-      color: #555;
-    }
-    /* Навигационное меню */
-    .nav-menu {
-      background: #2B4C9B;
-      /* ссылки размещаем горизонтально по умолчанию (для десктопа) */
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 0;
-      margin: 10px 0 0;
-    }
-    .nav-menu a {
-      color: #fff;
-      padding: 10px 15px;
-      display: block;
-      font-size: 0.95em;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .nav-menu a:hover {
-      background: #1F3A7D;
-    }
-    /* Кнопка-гамбургер (мобильное меню) */
-    .burger {
-      display: none;
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 1.5em;
-      color: #2B4C9B;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-    /* Адаптивность меню на мобильных */
-    @media (max-width: 767px) {
-      .header-top {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .header-top img {
-        margin-bottom: 10px;
-      }
-      .header-top .title {
-        font-size: 0.95em;
-      }
-      .header-top .title .short-name {
-        font-size: 0.95em;
-      }
-      .nav-menu {
-        /* Прячем меню по умолчанию на мобильных (будет открываться через .open) */
-        flex-direction: column;
-        width: 100%;
-        overflow: hidden;
-        max-height: 0;
-        transition: max-height 0.3s ease;
-      }
-      .nav-menu.open {
-        max-height: 300px; /* достаточное значение для всех ссылок */
-      }
-      .nav-menu a {
-        border-top: 1px solid #3B5EBE;
-      }
-      .burger {
-        display: block;
-      }
-    }
-
-    /* Секции сайта */
-    section {
-      padding: 30px 0;
-    }
-    section:nth-of-type(even) {
-      background: #f9f9f9; /* чередующийся светло-серый фон для четных секций */
-    }
-    section h2 {
-      font-size: 1.5em;
-      margin-bottom: 15px;
-      color: #2B4C9B;
-    }
-    section p {
-      margin: 0 0 15px;
-    }
-
-    /* Список "О ведомстве" */
-    #about ul {
-      list-style-type: disc;
-      padding-left: 20px;
-      margin: 15px 0;
-    }
-    #about ul li {
-      margin-bottom: 5px;
-    }
-
-    /* Список сотрудников (карточки) */
-    .employee-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      gap: 20px;
-    }
-    .employee-card {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 15px;
-      width: 100%;
-      box-sizing: border-box;
-      cursor: pointer;
-      transition: box-shadow 0.3s, transform 0.3s;
-    }
-    .employee-card:hover {
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
-      transform: translateY(-2px);
-    }
-    .employee-card strong {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 5px;
-    }
-    @media (min-width: 768px) {
-      .employee-card {
-        width: calc(50% - 20px); /* 2 карточки в ряд на планшетах */
-      }
-    }
-    @media (min-width: 1200px) {
-      .employee-card {
-        width: calc(25% - 20px); /* 4 карточки в ряд на десктопах */
-      }
-    }
-
-    /* Блок Руководство (карточки руководителей) */
-    .leaders {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .leader-card {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 15px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .leader-card h3 {
-      margin-bottom: 10px;
-      font-size: 1.1em;
-    }
-    .leader-card p {
-      margin: 5px 0;
-      font-size: 0.95em;
-    }
-    @media (min-width: 768px) {
-      .leader-card {
-        width: calc(50% - 10px); /* 2 карточки в ряд на планшетах и выше */
-      }
-    }
-
-    /* Список нормативных актов */
-    .law-list {
-      margin: 10px 0 0 20px;
-      padding: 0;
-    }
-    .law-list li {
-      margin-bottom: 8px;
-    }
-    .law-list a {
-      cursor: pointer;
-    }
-
-    /* Модальные окна (фон и содержимое) */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .modal.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 20px;
-      max-width: 500px;
-      width: 90%;
-      border-radius: 5px;
-      position: relative;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-    .modal-content h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-    .modal-content p {
-      margin: 0;
-    }
-    .modal-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #888;
-      cursor: pointer;
-    }
-    .modal-close:hover {
-      color: #000;
-    }
-
-    /* Футер */
-    footer {
-      background: #333;
-      color: #fff;
-      padding: 20px 0;
-    }
-    footer .contacts p {
-      margin: 5px 0;
-      font-size: 0.9em;
-    }
-    footer .contacts a {
-      color: #fff;
-      text-decoration: underline;
-    }
-    footer .copyright {
-      margin-top: 10px;
-      font-size: 0.85em;
-      color: #ccc;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реестр кадров Роскомнадзор</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #000; background: #fff; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header { display: flex; align-items: center; background: #f5f5f5; padding: 10px; border-bottom: 1px solid #ccc; }
+        header img { height: 60px; margin-right: 15px; }
+        .header-text { font-size: 18px; font-weight: bold; }
+        nav { background: #fff; border-bottom: 1px solid #ccc; padding: 0 10px; }
+        nav ul { list-style: none; margin: 0; padding: 0; }
+        nav li { }
+        nav a { display: block; padding: 8px 12px; color: #005a9c; text-decoration: none; font-weight: bold; }
+        nav a:hover { background: #eaeaea; }
+        .menu-toggle { display: none; background: #005a9c; color: #fff; border: none; padding: 8px 12px; font-size: 18px; cursor: pointer; }
+        section { padding: 20px 10px; }
+        section h2 { font-size: 1.4em; color: #005a9c; margin: 0 0 15px; }
+        section h3 { font-size: 1.2em; color: #005a9c; margin: 15px 0 10px; }
+        #employees .filter-input { max-width: 400px; width: 100%; padding: 5px; margin-bottom: 15px; }
+        #employees .employee-item { margin-bottom: 15px; }
+        #employees .employee-name { font-weight: bold; }
+        #employees .employee-position { }
+        .btn { background: #005a9c; color: #fff; text-decoration: none; display: inline-block; padding: 5px 10px; font-size: 14px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { background: #004b82; }
+        .download-btn { font-size: 16px; padding: 10px 20px; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background: rgba(0,0,0,0.5); }
+        .modal-content { background: #fff; padding: 20px; margin: 10% auto; width: 90%; max-width: 500px; position: relative; border-radius: 5px; }
+        .modal-content h2 { font-size: 1.2em; margin-top: 0; }
+        .modal .close { position: absolute; top: 10px; right: 10px; font-size: 1.2em; font-weight: bold; color: #aaa; cursor: pointer; }
+        .modal .close:hover { color: #000; }
+        @media (min-width: 768px) {
+            .menu-toggle { display: none; }
+            nav ul { display: flex; align-items: center; }
+            nav li { margin-right: 15px; }
+            nav li:last-child { margin-right: 0; }
+        }
+        @media (max-width: 767px) {
+            .menu-toggle { display: inline-block; }
+            nav ul { display: none; flex-direction: column; }
+            nav.open ul { display: block; }
+            nav li { margin: 5px 0; }
+        }
+        @media (max-width: 600px) {
+            header { flex-direction: column; align-items: center; text-align: center; }
+            header img { margin: 0 0 10px 0; }
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Шапка сайта с гербом и названием -->
-  <header>
-    <div class="container header-top">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/649px-Coat_of_Arms_of_the_Russian_Federation.svg.png" alt="Герб РФ" />
-      <div class="title">
-        <div>ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,</div>
-        <div>ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ</div>
-        <div class="short-name">Роскомнадзор</div>
-      </div>
-    </div>
-    <!-- Навигационное меню -->
-    <nav class="container nav-menu">
-      <a href="#about">О ведомстве</a>
-      <a href="#employees">Список сотрудников</a>
-      <a href="#leadership">Руководство</a>
-      <a href="#laws">Нормативные акты</a>
-      <a href="#contacts">Контакты</a>
+<div class="container">
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/406px-Coat_of_Arms_of_the_Russian_Federation.svg.png" alt="Герб" />
+        <div class="header-text">ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ, ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ</div>
+    </header>
+    <nav>
+        <button class="menu-toggle">&#9776;</button>
+        <ul>
+            <li><a href="#about">О ведомстве</a></li>
+            <li><a href="#employees">Список сотрудников</a></li>
+            <li><a href="#app">Русский стандарт безопасности</a></li>
+            <li><a href="#leadership">Руководство</a></li>
+            <li><a href="#acts">Нормативные акты</a></li>
+        </ul>
     </nav>
-    <!-- Кнопка-бургер для мобильного меню -->
-    <button class="burger" aria-label="Меню">&#9776;</button>
-  </header>
-
-  <!-- Раздел: О ведомстве -->
-  <section id="about">
-    <div class="container">
-      <h2>О ведомстве</h2>
-      <p>Федеральная служба по надзору в сфере связи, информационных технологий и массовых коммуникаций (Роскомнадзор) – российский федеральный орган исполнительной власти, осуществляющий функции контроля и надзора в следующих областях:</p>
-      <ul>
-        <li>деятельность средств массовой информации (печать, телевидение, радио, сети связи общего пользования);</li>
-        <li>соблюдение требований законодательства в сфере связи и информационных технологий, включая Интернет;</li>
-        <li>защита прав субъектов персональных данных и надзор за обработкой персональных данных;</li>
-        <li>организация и ведение реестров (например, реестра запрещенной информации и реестра операторов персональных данных);</li>
-        <li>лицензирование, регистрация и контроль деятельности организаций в сфере связи, информационных технологий и массовых коммуникаций.</li>
-      </ul>
-      <p>Роскомнадзор находится в ведении Министерства цифрового развития, связи и массовых коммуникаций РФ. Служба образована в 2008 году и с тех пор отвечает за реализацию государственной политики в установленной сфере деятельности, в том числе за обеспечение информационной безопасности и соблюдение установленных правил распространения информации.</p>
+    <section id="about">
+        <h2>О ведомстве</h2>
+        <p>Федеральная служба по надзору в сфере связи, информационных технологий и массовых коммуникаций (Роскомнадзор) осуществляет функции контроля и надзора в сфере телекоммуникаций, информационных технологий, массовых коммуникаций, а также в области защиты персональных данных.</p>
+        <h3>Основные задачи</h3>
+        <ul>
+            <li>разработка и реализация государственной политики в установленных сферах деятельности;</li>
+            <li>осуществление надзора за соблюдением законодательства в области связи, информационных технологий и массовых коммуникаций;</li>
+            <li>контроль за обработкой и защитой персональных данных;</li>
+            <li>принятие мер по предотвращению правонарушений в подконтрольных сферах.</li>
+        </ul>
+        <h3>История</h3>
+        <p>Роскомнадзор образован в 2008 году в результате реорганизации федеральных органов исполнительной власти. С момента основания служба курирует соблюдение законодательства в быстроразвивающейся сфере ИКТ и коммуникаций, адаптируя механизмы надзора к новым вызовам.</p>
+    </section>
+    <section id="employees">
+        <h2>Список сотрудников</h2>
+        <input type="text" class="filter-input" id="filterInput" placeholder="Поиск по ФИО" />
+        <div class="employee-item"><span class="employee-name">Иванов Иван Иванович</span> – <span class="employee-position">Начальник отдела информационной безопасности</span> <button class="btn more-btn" data-target="modal-emp1">Подробнее</button></div>
+        <div class="employee-item"><span class="employee-name">Петров Пётр Петрович</span> – <span class="employee-position">Главный специалист отдела технического надзора</span> <button class="btn more-btn" data-target="modal-emp2">Подробнее</button></div>
+        <div class="employee-item"><span class="employee-name">Сидоров Сидор Сидорович</span> – <span class="employee-position">Ведущий инженер по связи</span> <button class="btn more-btn" data-target="modal-emp3">Подробнее</button></div>
+        <div class="employee-item"><span class="employee-name">Кузнецова Мария Ивановна</span> – <span class="employee-position">Советник отдела лицензирования</span> <button class="btn more-btn" data-target="modal-emp4">Подробнее</button></div>
+        <div class="employee-item"><span class="employee-name">Смирнова Анна Петровна</span> – <span class="employee-position">Специалист 1 категории</span> <button class="btn more-btn" data-target="modal-emp5">Подробнее</button></div>
+    </section>
+    <section id="app">
+        <h2>Приложение «Русский стандарт безопасности»</h2>
+        <p>Приложение "Русский стандарт безопасности" разработано для проверки мобильных устройств на соответствие требованиям безопасности и рекомендаций Роскомнадзора. Оно позволяет пользователям сканировать устройства на наличие потенциальных угроз, получать рекомендации по усилению защиты данных и соблюдать актуальные стандарты информационной безопасности.</p>
+        <p><a href="rus_standard.apk" class="btn download-btn" download>Скачать APK</a></p>
+    </section>
+    <section id="leadership">
+        <h2>Руководство</h2>
+        <h3>Руководитель службы: Захаров Александр Викторович</h3>
+        <p><strong>Контакты:</strong> тел.: +7 (495) 666-66-66, email: rkn@rkn.gov.ru</p>
+        <p><strong>Приём граждан:</strong> каждый понедельник с 10:00 до 12:00 (предварительная запись по телефону)</p>
+        <p><strong>Обязанности:</strong> общее руководство деятельностью Роскомнадзора; координация работы центрального аппарата и территориальных органов службы</p>
+        <h3>Первый заместитель руководителя: Борисова Ольга Николаевна</h3>
+        <p><strong>Контакты:</strong> тел.: +7 (495) 777-77-77, email: borisova@rkn.gov.ru</p>
+        <p><strong>Приём граждан:</strong> каждый вторник с 14:00 до 16:00</p>
+        <p><strong>Обязанности:</strong> курирование вопросов надзора в сфере связи и информационной безопасности; взаимодействие с операторами связи</p>
+        <h3>Заместитель руководителя: Смирнов Дмитрий Александрович</h3>
+        <p><strong>Контакты:</strong> тел.: +7 (495) 888-88-88, email: smirnov@rkn.gov.ru</p>
+        <p><strong>Приём граждан:</strong> каждый четверг с 10:00 до 12:00</p>
+        <p><strong>Обязанности:</strong> координация надзора в сфере массовых коммуникаций и защиты персональных данных; организация приема граждан по вопросам деятельности службы</p>
+    </section>
+    <section id="acts">
+        <h2>Нормативные акты</h2>
+        <ul>
+            <li>Федеральный закон № 152-ФЗ «О персональных данных» <button class="btn more-btn" data-target="modal-act1">Подробнее</button></li>
+            <li>Федеральный закон № 149-ФЗ «Об информации, информационных технологиях и о защите информации» <button class="btn more-btn" data-target="modal-act2">Подробнее</button></li>
+            <li>Федеральный закон № 126-ФЗ «О связи» <button class="btn more-btn" data-target="modal-act3">Подробнее</button></li>
+        </ul>
+    </section>
+</div>
+<div id="modal-emp1" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Иванов Иван Иванович</h2>
+        <p><strong>Должность:</strong> Начальник отдела информационной безопасности</p>
+        <p><strong>Подразделение:</strong> Управление информационной безопасности</p>
+        <p><strong>Телефон:</strong> +7 (495) 111-11-11</p>
+        <p><strong>Email:</strong> ivanov@example.ru</p>
     </div>
-  </section>
-
-  <!-- Раздел: Список сотрудников -->
-  <section id="employees">
-    <div class="container">
-      <h2>Список сотрудников</h2>
-      <!-- Карточки сотрудников (10 карточек) -->
-      <div class="employee-list">
-        <div class="employee-card" data-modal="emp1">
-          <strong>Иванов Иван Иванович</strong>
-          Начальник отдела информационной безопасности
-        </div>
-        <div class="employee-card" data-modal="emp2">
-          <strong>Петров Пётр Николаевич</strong>
-          Заместитель начальника управления надзора в сфере связи
-        </div>
-        <div class="employee-card" data-modal="emp3">
-          <strong>Сидоров Алексей Михайлович</strong>
-          Главный специалист-эксперт отдела лицензирования
-        </div>
-        <div class="employee-card" data-modal="emp4">
-          <strong>Смирнова Мария Ивановна</strong>
-          Ведущий консультант юридического отдела
-        </div>
-        <div class="employee-card" data-modal="emp5">
-          <strong>Кузнецова Ольга Петровна</strong>
-          Начальник отдела по защите прав субъектов ПДн
-        </div>
-        <div class="employee-card" data-modal="emp6">
-          <strong>Попов Дмитрий Сергеевич</strong>
-          Заместитель начальника отдела международного сотрудничества
-        </div>
-        <div class="employee-card" data-modal="emp7">
-          <strong>Васильева Елена Викторовна</strong>
-          Руководитель пресс-службы Роскомнадзора
-        </div>
-        <div class="employee-card" data-modal="emp8">
-          <strong>Михайлов Игорь Андреевич</strong>
-          Советник руководителя службы
-        </div>
-        <div class="employee-card" data-modal="emp9">
-          <strong>Павлова Наталья Олеговна</strong>
-          Начальник отдела финансового обеспечения
-        </div>
-        <div class="employee-card" data-modal="emp10">
-          <strong>Борисов Сергей Владимирович</strong>
-          Главный специалист отдела кадров
-        </div>
-      </div>
-      <!-- Модальные окна для сотрудников (скрытые по умолчанию) -->
-      <div class="modal" id="emp1">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Иванов Иван Иванович</h3>
-          <p><strong>Должность:</strong> Начальник отдела информационной безопасности</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-01</p>
-          <p><strong>E-mail:</strong> i.ivanov@rkn.gov.ru</p>
-        </div>
-      </div>
-      <div class="modal" id="emp2">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Петров Пётр Николаевич</h3>
-          <p><strong>Должность:</strong> Заместитель начальника управления надзора в сфере связи</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-02</p>
-          <p><strong>E-mail:</strong> p.petrov@rkn.gov.ru</p>
-        </div>
-      </div>
-      <div class="modal" id="emp3">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Сидоров Алексей Михайлович</h3>
-          <p><strong>Должность:</strong> Главный специалист-эксперт отдела лицензирования</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-03</p>
-          <p><strong>E-mail:</strong> a.sidorov@rkn.gov.ru</p>
-        </div>
-      </div>
-      <div class="modal" id="emp4">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Смирнова Мария Ивановна</h3>
-          <p><strong>Должность:</strong> Ведущий консультант юридического отдела</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-04</p>
-          <p><strong>E-mail:</strong> m.smirnova@rkn.gov.ru</p>
-        </div>
-      </div>
-      <div class="modal" id="emp5">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Кузнецова Ольга Петровна</h3>
-          <p><strong>Должность:</strong> Начальник отдела по защите прав субъектов персональных данных</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-05</p>
-          <p><strong>E-mail:</strong> o.kuznetsova@rkn.gov.ru</p>
-        </div>
-      </div>
-      <div class="modal" id="emp6">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Попов Дмитрий Сергеевич</h3>
-          <p><strong>Должность:</strong> Заместитель начальника отдела международного сотрудничества</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-06</p>
-          <p><strong>E-mail:</strong> d.popov@rkn.gov.ru</p>
-        </div>
-      </div>
-      <div class="modal" id="emp7">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Васильева Елена Викторовна</h3>
-          <p><strong>Должность:</strong> Руководитель пресс-службы Роскомнадзора</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-07</p>
-          <p><strong>E-mail:</strong> e.vasileva@rkn.gov.ru</p>
-        </div>
-      </div>
-      <div class="modal" id="emp8">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Михайлов Игорь Андреевич</h3>
-          <p><strong>Должность:</strong> Советник руководителя Роскомнадзора</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-08</p>
-          <p><strong>E-mail:</strong> i.mikhaylov@rkn.gov.ru</p>
-        </div>
-      </div>
-      <div class="modal" id="emp9">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Павлова Наталья Олеговна</h3>
-          <p><strong>Должность:</strong> Начальник отдела финансового обеспечения</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-09</p>
-          <p><strong>E-mail:</strong> n.pavlova@rkn.gov.ru</p>
-        </div>
-      </div>
-      <div class="modal" id="emp10">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Борисов Сергей Владимирович</h3>
-          <p><strong>Должность:</strong> Главный специалист отдела кадров</p>
-          <p><strong>Телефон:</strong> +7 (495) 710-00-10</p>
-          <p><strong>E-mail:</strong> s.borisov@rkn.gov.ru</p>
-        </div>
-      </div>
+</div>
+<div id="modal-emp2" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Петров Пётр Петрович</h2>
+        <p><strong>Должность:</strong> Главный специалист отдела технического надзора</p>
+        <p><strong>Подразделение:</strong> Отдел технического надзора</p>
+        <p><strong>Телефон:</strong> +7 (495) 222-22-22</p>
+        <p><strong>Email:</strong> petrov@example.ru</p>
     </div>
-  </section>
-
-  <!-- Раздел: Руководство -->
-  <section id="leadership">
-    <div class="container">
-      <h2>Руководство</h2>
-      <div class="leaders">
-        <div class="leader-card">
-          <h3>Липов Андрей Юрьевич</h3>
-          <p><strong>Должность:</strong> Руководитель Роскомнадзора</p>
-          <p><strong>Телефон (приёмная):</strong> +7 (495) 987-68-00</p>
-          <p><strong>E-mail:</strong> office@rkn.gov.ru</p>
-        </div>
-        <div class="leader-card">
-          <h3>Субботин Вадим Алексеевич</h3>
-          <p><strong>Должность:</strong> Заместитель руководителя</p>
-          <p><strong>Телефон (приёмная):</strong> +7 (495) 987-68-01</p>
-          <p><strong>E-mail:</strong> office@rkn.gov.ru</p>
-        </div>
-      </div>
+</div>
+<div id="modal-emp3" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Сидоров Сидор Сидорович</h2>
+        <p><strong>Должность:</strong> Ведущий инженер по связи</p>
+        <p><strong>Подразделение:</strong> Отдел надзора за связью</p>
+        <p><strong>Телефон:</strong> +7 (495) 333-33-33</p>
+        <p><strong>Email:</strong> sidorov@example.ru</p>
     </div>
-  </section>
-
-  <!-- Раздел: Нормативные акты -->
-  <section id="laws">
-    <div class="container">
-      <h2>Нормативные акты</h2>
-      <ol class="law-list">
-        <li><a data-modal="law1">Федеральный закон № 126-ФЗ «О связи»</a></li>
-        <li><a data-modal="law2">Федеральный закон № 149-ФЗ «Об информации, информационных технологиях и о защите информации»</a></li>
-        <li><a data-modal="law3">Федеральный закон № 152-ФЗ «О персональных данных»</a></li>
-        <li><a data-modal="law4">Закон РФ № 2124-1 «О средствах массовой информации»</a></li>
-        <li><a data-modal="law5">Федеральный закон № 436-ФЗ «О защите детей от информации, причиняющей вред их здоровью и развитию»</a></li>
-        <li><a data-modal="law6">Постановление Правительства РФ № 1101 (единый реестр запрещённой информации)</a></li>
-        <li><a data-modal="law7">Федеральный закон № 242-ФЗ (о локализации персональных данных)</a></li>
-        <li><a data-modal="law8">Федеральный закон № 90-ФЗ (закон о «суверенном Рунете»)</a></li>
-        <li><a data-modal="law9">Указ Президента РФ № 646 (Доктрина информационной безопасности)</a></li>
-        <li><a data-modal="law10">Федеральный закон № 176-ФЗ «О почтовой связи»</a></li>
-      </ol>
-      <!-- Модальные окна для нормативных актов -->
-      <div class="modal" id="law1">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>ФЗ №126-ФЗ «О связи»</h3>
-          <p>Определяет правовые основы деятельности в сфере связи. Закон устанавливает требования к услугам электросвязи, порядку лицензирования операторов связи и регулированию отношений между оператором и абонентом.</p>
-        </div>
-      </div>
-      <div class="modal" id="law2">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>ФЗ №149-ФЗ «Об информации…»</h3>
-          <p>Устанавливает основные принципы регулирования отношений в сфере информации, информационных технологий и защиты информации. В том числе определяет порядок ограничения доступа к запрещенной информации в Интернете.</p>
-        </div>
-      </div>
-      <div class="modal" id="law3">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>ФЗ №152-ФЗ «О персональных данных»</h3>
-          <p>Регулирует порядок обработки персональных данных. Закон определяет права субъектов персональных данных и обязанности операторов, устанавливает требования по защите персональных данных и ответственность за нарушения.</p>
-        </div>
-      </div>
-      <div class="modal" id="law4">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Закон «О СМИ»</h3>
-          <p>Определяет правовые основы деятельности средств массовой информации. Закон описывает порядок учреждения СМИ, права и обязанности журналистов, а также процедуры регистрации и надзора за деятельностью СМИ.</p>
-        </div>
-      </div>
-      <div class="modal" id="law5">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>ФЗ №436-ФЗ «О защите детей…»</h3>
-          <p>Направлен на защиту детей от вредной информации. Устанавливает возрастные категории информационной продукции и требования к ограничению распространения среди несовершеннолетних информации, способной причинить вред их здоровью или развитию.</p>
-        </div>
-      </div>
-      <div class="modal" id="law6">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Пост. Прав. №1101 (реестр)</h3>
-          <p>Постановление вводит единый реестр доменных имен и указателей страниц сайтов, содержащих запрещенную информацию. Определяется порядок внесения ресурсов в реестр (блокировки сайтов) и их исключения из него по решению уполномоченных органов.</p>
-        </div>
-      </div>
-      <div class="modal" id="law7">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>ФЗ №242-ФЗ (локализация ПДн)</h3>
-          <p>Обязывает компании хранить персональные данные граждан РФ на серверах, расположенных на территории России. Данный закон обеспечил локализацию баз данных с персональными данными внутри страны и ввел механизмы контроля за исполнением этих требований.</p>
-        </div>
-      </div>
-      <div class="modal" id="law8">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>ФЗ №90-ФЗ (суверенный Рунет)</h3>
-          <p>Закон об устойчивом Рунете направлен на обеспечение безопасности и стабильности российского сегмента сети Интернет. Он предусматривает создание национальной инфраструктуры для поддержания работы Интернета в РФ в случае угроз из-за рубежа.</p>
-        </div>
-      </div>
-      <div class="modal" id="law9">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>Указ №646 (Доктрина ИБ)</h3>
-          <p>Указ Президента утвердил Доктрину информационной безопасности РФ. Документ определяет стратегические направления обеспечения информационной безопасности государства, перечень основных угроз и меры по противодействию им на государственном уровне.</p>
-        </div>
-      </div>
-      <div class="modal" id="law10">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3>ФЗ №176-ФЗ «О почтовой связи»</h3>
-          <p>Регулирует деятельность почтовой связи в России. Закон определяет права и обязанности операторов почтовой связи и пользователей, гарантирует тайну переписки и устанавливает стандарты качества оказания услуг почтовой связи населению.</p>
-        </div>
-      </div>
+</div>
+<div id="modal-emp4" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Кузнецова Мария Ивановна</h2>
+        <p><strong>Должность:</strong> Советник отдела лицензирования</p>
+        <p><strong>Подразделение:</strong> Отдел лицензирования</p>
+        <p><strong>Телефон:</strong> +7 (495) 444-44-44</p>
+        <p><strong>Email:</strong> kuznetsova@example.ru</p>
     </div>
-  </section>
-
-  <!-- Раздел: Контакты (Футер) -->
-  <footer id="contacts">
-    <div class="container contacts">
-      <p><strong>Адрес:</strong> 109074, Россия, г. Москва, Китайгородский пр-д, д. 7, стр. 2</p>
-      <p><strong>Телефон:</strong> +7 (495) 987-68-00</p>
-      <p><strong>E-mail:</strong> <a href="mailto:info@rkn.gov.ru">info@rkn.gov.ru</a></p>
-      <p class="copyright">© Роскомнадзор, 2025</p>
+</div>
+<div id="modal-emp5" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Смирнова Анна Петровна</h2>
+        <p><strong>Должность:</strong> Специалист 1 категории</p>
+        <p><strong>Подразделение:</strong> Управление персонала</p>
+        <p><strong>Телефон:</strong> +7 (495) 555-55-55</p>
+        <p><strong>Email:</strong> smirnova@example.ru</p>
     </div>
-  </footer>
-
-  <!-- Встроенный JavaScript для функционала меню и модальных окон -->
-  <script>
-    // Мобильное меню: показать/скрыть по клику на бургер
-    const burger = document.querySelector('.burger');
-    const navMenu = document.querySelector('.nav-menu');
-    burger.addEventListener('click', () => {
-      navMenu.classList.toggle('open');
-      // Меняем значок на крестик при открытом меню
-      burger.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
-    });
-
-    // Открытие модального окна при клике на элемент с атрибутом data-modal
-    document.querySelectorAll('[data-modal]').forEach(elem => {
-      elem.addEventListener('click', () => {
-        const modalId = elem.getAttribute('data-modal');
-
-```html
+</div>
+<div id="modal-act1" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>152-ФЗ «О персональных данных»</h2>
+        <p>Устанавливает требования к обработке и защите персональных данных, определяет права субъектов персональных данных и обязанности операторов, обрабатывающих такие данные.</p>
+    </div>
+</div>
+<div id="modal-act2" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>149-ФЗ «Об информации, информационных технологиях и о защите информации»</h2>
+        <p>Определяет правовые основы в сфере информации и информационных технологий, устанавливает режимы доступа к информации и меры ответственности за нарушения в этой сфере.</p>
+    </div>
+</div>
+<div id="modal-act3" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>126-ФЗ «О связи»</h2>
+        <p>Регулирует отношения в области связи, устанавливает полномочия государственных органов, права и обязанности операторов связи и пользователей услуг связи.</p>
+    </div>
+</div>
 <script>
-    // Мобильное меню: показать/скрыть по клику на бургер
-    const burger = document.querySelector('.burger');
-    const navMenu = document.querySelector('.nav-menu');
-    burger.addEventListener('click', () => {
-      navMenu.classList.toggle('open');
-      // Меняем значок на крестик при открытом меню
-      burger.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
-    });
-
-    // Открытие модального окна при клике на элемент с атрибутом data-modal
-    document.querySelectorAll('[data-modal]').forEach(elem => {
-      elem.addEventListener('click', () => {
-        const modalId = elem.getAttribute('data-modal');
-        const modalEl = document.getElementById(modalId);
-        if (modalEl) {
-          modalEl.classList.add('active');
-        }
-      });
-    });
-
-    // Закрытие модальных окон при клике на фон или крестик
-    document.querySelectorAll('.modal').forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal')) {
-          modal.classList.remove('active');
-        }
-      });
-    });
-    document.querySelectorAll('.modal-close').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.closest('.modal').classList.remove('active');
-      });
-    });
-  </script>
+        // Toggle mobile menu
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('open');
+        });
+        // Close menu when a nav link is clicked (for mobile)
+        document.querySelectorAll('nav ul li a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.querySelector('nav').classList.remove('open');
+            });
+        });
+        // Filter employees by name
+        document.getElementById('filterInput').addEventListener('input', function() {
+            var filter = this.value.toLowerCase();
+            var employees = document.querySelectorAll('.employee-item');
+            employees.forEach(function(item) {
+                var name = item.querySelector('.employee-name').textContent.toLowerCase();
+                if (name.includes(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+        // Open modals
+        document.querySelectorAll('.more-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var target = this.getAttribute('data-target');
+                if (target) {
+                    document.getElementById(target).classList.add('active');
+                }
+            });
+        });
+        // Close modals when clicking close button or outside modal content
+        document.querySelectorAll('.modal').forEach(function(modal) {
+            // Close on X click
+            modal.querySelector('.close').addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+            // Close on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+</script>
 </body>
 </html>

@@ -12,13 +12,13 @@
     .container{max-width:1200px;margin:0 auto;padding:0 16px}
 
     /* шапка */
-    header{background:#003366;color:#fff}
+    header{background:#003366;color:#fff;position:relative}
     header .container{display:flex;align-items:center;padding:16px 0}
     .logo{height:40px}
     .agency-title{margin-left:16px;font-size:14px;line-height:1.4}
     .nav-toggle{display:none}
-    .nav-toggle-label{display:none;font-size:24px;margin-left:auto;cursor:pointer}
-    .nav-links{display:flex;gap:24px;margin-left:auto}
+    .nav-toggle-label{display:none;font-size:24px;cursor:pointer}
+    .nav-links{display:flex;gap:24px;margin-left:auto;z-index:1}
     .nav-links a{color:#fff;text-decoration:none;font-weight:600}
 
     /* hero */
@@ -73,16 +73,42 @@
     footer p{font-size:14px;margin-bottom:4px}
 
     /* адаптив */
-    @media(max-width:1024px){.leader-list{grid-template-columns:1fr}}
+    @media(max-width:1024px){
+      .leader-list{grid-template-columns:1fr}
+    }
     @media(max-width:767px){
-      .nav-toggle-label{display:block;color:#fff;margin-left:auto}
-      .nav-links{display:none;flex-direction:column;background:#003366;
-        position:absolute;top:100%;left:0;width:100%}
-      .nav-links a{padding:12px 16px}
-      .nav-toggle:checked~.nav-links{display:flex}
+      /* показываем только гамбургер-иконку */
+      .nav-toggle-label{
+        display:block;
+        position:absolute;
+        top:16px;
+        right:16px;
+        color:#fff;
+      }
+      /* скрываем пункты меню по умолчанию */
+      .nav-links{
+        display:none;
+        flex-direction:column;
+        background:#003366;
+        position:absolute;
+        top:56px;
+        left:0;
+        width:100%;
+        z-index:1000;
+      }
+      /* при нажатии — показываем */
+      .nav-toggle:checked ~ .nav-links{
+        display:flex;
+      }
+      .nav-links a{
+        padding:12px 16px;
+        border-top:1px solid rgba(255,255,255,0.1);
+      }
       .employees-grid{grid-template-columns:1fr}
     }
-    @media(max-width:480px){.modal-content{width:95%}}
+    @media(max-width:480px){
+      .modal-content{width:95%}
+    }
 
     /* модалки */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);
@@ -103,11 +129,11 @@
     <div class="container">
       <img src="images/rkn-logo.png" alt="Герб Роскомнадзора" class="logo" />
       <div class="agency-title">
-        ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br />
+        ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,  
         ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
       </div>
       <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-      <label for="nav-toggle" class="nav-toggle-label">☰ Меню</label>
+      <label for="nav-toggle" class="nav-toggle-label">☰</label>
       <nav class="nav-links">
         <a href="https://rkn.gov.ru" target="_blank">Главная</a>
         <a href="#about">О ведомстве</a>
@@ -141,7 +167,7 @@
       <ul>
         <li>Лицензирование операторов связи;</li>
         <li>Контроль обработки персональных данных;</li>
-        <li>Мониторинг и блокировка противоправного контента;</li>
+        <li>Мониторинг и блокировка противоправного контента;</li>
         <li>Управление госреестрами (РНПД, запрещённых сайтов и др.).</li>
       </ul>
       <h3>Структура</h3>
@@ -232,7 +258,6 @@
       <div class="id-card"><img id="modalIdImg" src="" alt="Удостоверение" /></div>
     </div>
   </div>
-
   <div id="lawModal" class="modal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal('lawModal')">×</button>
@@ -253,20 +278,20 @@
       {id:7,name:'Егорова Мария',position:'Юрист',dept:'Юридический отдел',email:'m.egorova@gov.ru',phone:'+7 (495) 789-01-23',birth:'27.07.1984',idNumber:'ID-1007',responsibilities:['Юридическая экспертиза документов','Консультирование по нормативам'],photo:'images/egorova.jpg',idImg:'images/egorova_id.jpg'},
       {id:8,name:'Волков Дмитрий',position:'Аналитик данных',dept:'Отдел аналитики',email:'d.volkov@gov.ru',phone:'+7 (495) 890-12-34',birth:'31.01.1991',idNumber:'ID-1008',responsibilities:['Сбор и обработка больших данных','Разработка аналитических дашбордов'],photo:'images/volkov.jpg',idImg:'images/volkov_id.jpg'},
       {id:9,name:'Лебедев Николай',position:'Менеджер проектов',dept:'Проектный отдел',email:'n.lebedev@gov.ru',phone:'+7 (495) 901-23-45',birth:'14.06.1988',idNumber:'ID-1009',responsibilities:['Управление межведомственными проектами','Координация команд и контроль сроков'],photo:'images/lebedev.jpg',idImg:'images/lebedev_id.jpg'},
-      {id:10,name:'Морозова Елена',position:'Специалист по связям',dept:'PR-отдел',email:'e.morozova@gov.ru',phone:'+7 (495) 012-34-56',birth:'29.03.1993',idNumber:'ID-1010',responsibilities:['Организация PR-кампаний','Подготовка отчетов о PR-активностях'],photo:'images/morozova.jpg',idImg:'images/morozova_id.jpg'}
+      {id:10,name:'Морозова Елена',position:'Специалист по связям',dept:'PR-отдел',email:'e.morозova@gov.ru',phone:'+7 (495) 012-34-56',birth:'29.03.1993',idNumber:'ID-1010',responsibilities:['Организация PR-кампаний','Подготовка отчетов о PR-активностях'],photo:'images/morozova.jpg',idImg:'images/morozova_id.jpg'}
     ];
 
     const laws = [
-      {id:1,title:'149-ФЗ «Об информации, информационных технологиях и о защите информации»',desc:'Устанавливает правовые основы обработки информации, определяет порядок её распространения и хранения, содержит требования к обеспечению конфиденциальности и целостности данных.'},
-      {id:2,title:'152-ФЗ «О персональных данных»',desc:'Регламентирует сбор, хранение, обработку и передачу персональных данных физических лиц, закрепляет права субъектов данных и обязанности операторов.'},
-      {id:3,title:'126-ФЗ «О связи»',desc:'Определяет принципы регулирования деятельности операторов связи, порядок лицензирования услуг и использования радиочастотного спектра.'},
-      {id:4,title:'242-ФЗ «О техническом регулировании»',desc:'Устанавливает систему разработки, принятия и применения технических регламентов, определяет ответственность за несоответствие продукции требованиям безопасности.'},
-      {id:5,title:'187-ФЗ «Об обязательном экземпляре документов»',desc:'Требует от организаций и издателей передавать обязательные экземпляры официальных и научных публикаций в государственные фонды и библиотеки.'},
-      {id:6,title:'297-ФЗ «О защите информации в информационно‑телекоммуникационных сетях»',desc:'Регулирует меры защиты информации в сетях связи общего пользования, включая аварийное восстановление и противодействие несанкционированному доступу.'},
-      {id:7,title:'38-ФЗ «О рекламе»',desc:'Устанавливает правила распространения рекламы в СМИ, интернете и наружных носителях, требования к содержанию рекламных сообщений и ответственность за нарушения.'},
-      {id:8,title:'235-ФЗ «О цифровых финансовых активах»',desc:'Определяет правовые основы выпуска, обращения и учета цифровых финансовых активов и взаимодействия участников рынка.'},
-      {id:9,title:'149-ФЗ (ред. 2024) «Об информации»',desc:'Актуализированная редакция закона, учитывающая цифровизацию госуслуг и особенности регулирования крупных интернет‑платформ.'},
-      {id:10,title:'ТК РФ — раздел о цифровизации труда',desc:'Включает нормы, регулирующие дистанционную работу, использование электронных систем управления трудовыми отношениями и защиту прав работников при автоматизации процессов.'}
+      {id:1,title:'149-ФЗ «Об информации, информационных технологиях и о защите информации»',desc:'Устанавливает правовые основы обработки информации, определяет порядок её распространения и хранения.'},
+      {id:2,title:'152-ФЗ «О персональных данных»',desc:'Регламентирует сбор, хранение, обработку и передачу персональных данных.'},
+      {id:3,title:'126-ФЗ «О связи»',desc:'Определяет принципы регулирования операторов связи и использования радиочастот.'},
+      {id:4,title:'242-ФЗ «О техническом регулировании»',desc:'Устанавливает систему технических регламентов и ответственность за несоответствие.'},
+      {id:5,title:'187-ФЗ «Об обязательном экземпляре документов»',desc:'Требует передачу обязательных экземпляров публикаций в государственные фонды.'},
+      {id:6,title:'297-ФЗ «О защите информации в информационно‑телекоммуникационных сетях»',desc:'Предусматривает меры защиты данных и обеспечение доступности сервисов.'},
+      {id:7,title:'38-ФЗ «О рекламе»',desc:'Устанавливает правила распространения рекламы и ответственность за нарушение.'},
+      {id:8,title:'235-ФЗ «О цифровых финансовых активах»',desc:'Регулирует выпуск и обращение цифровых финансовых активов.'},
+      {id:9,title:'149-ФЗ (ред. 2024) «Об информации»',desc:'Актуализированная редакция с учётом цифровизации госуслуг.'},
+      {id:10,title:'ТК РФ — раздел о цифровизации труда',desc:'Включает нормы о дистанционной работе и электронном документообороте.'}
     ];
 
     // Рендер сотрудников

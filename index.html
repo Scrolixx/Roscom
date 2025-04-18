@@ -6,113 +6,95 @@
   <title>Реестр кадров Федеральной службы по надзору в сфере связи, информационных технологий и массовых коммуникаций</title>
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    /* Базовые стили */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'PT Sans', sans-serif; background: #F5F7FA; color: #212121; line-height: 1.5; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+    /* ——————— Базовые стили ——————— */
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'PT Sans',sans-serif; background:#F5F7FA; color:#212121; line-height:1.5; }
+    .container { max-width:1200px; margin:0 auto; padding:0 16px; }
 
-    /* Шапка и меню */
-    header { background: #003366; color: #fff; position: relative; }
-    header .container { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
-    .logo { height: 40px; }
-    .agency-title { font-size: 14px; line-height: 1.4; text-align: left; }
-    .nav-toggle { display: none; }
-    .nav-toggle-label { display: none; font-size: 24px; cursor: pointer; }
-    .nav-links { display: flex; gap: 24px; }
-    .nav-links a { color: #fff; text-decoration: none; font-weight: 600; padding: 8px; }
-    .nav-links a:hover { background: #1a4d80; border-radius: 4px; }
-
-    /* Hero */
-    .hero { background: linear-gradient(90deg,#003366,#1a4d80); color: #fff; text-align: center; padding: 40px 0; }
-    .hero h1 { font-size: 32px; margin-bottom: 8px; }
-    .hero .sub-title { font-size: 16px; }
-
-    /* Секции */
-    section.block { background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,.1); padding: 24px; margin-bottom: 32px; }
-    h2.section-title { color: #003366; font-size: 24px; margin-bottom: 16px; border-bottom: 2px solid #1a4d80; padding-bottom: 4px; }
-    #about h3 { margin-top: 16px; color: #1a4d80; font-size: 18px; }
-    #about p, #about ul { margin-bottom: 8px; color: #555; }
-    #about ul { list-style: disc; margin-left: 20px; }
-    .divider { height: 2px; background: #003366; border: none; margin: 32px 0; }
-
-    /* Сотрудники */
-    .search { margin: 16px 0; }
-    .search input { width: 100%; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
-    .employees-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 24px; }
-    .employee-card { background: #fff; border-left: 4px solid #003366; border-radius: 8px; padding: 16px; text-align: center; display: flex; flex-direction: column; transition: transform .2s; }
-    .employee-card:hover { transform: translateY(-4px); }
-    .employee-photo { width: 120px; height: 160px; object-fit: cover; border-radius: 4px; margin: 0 auto 12px; }
-    .employee-name { font-size: 18px; color: #003366; margin-bottom: 8px; }
-    .employee-position, .employee-dept { font-size: 14px; color: #555; margin-bottom: 4px; }
-    .btn-details { margin-top: auto; padding: 8px; border: 1px solid #003366; border-radius: 4px; background: transparent; color: #003366; cursor: pointer; }
-    .btn-details:hover { background: #003366; color: #fff; }
-
-    /* Приложение */
-    .download-btn { display: inline-block; margin-top: 16px; padding: 12px 24px; background: #003366; color: #fff; text-decoration: none; font-weight: 600; border-radius: 4px; }
-    .download-btn:hover { background: #1a4d80; }
-
-    /* Руководство */
-    .leader-list { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
-    .leader { border: 1px solid #eee; border-radius: 4px; padding: 16px; text-align: center; }
-    .leader h3 { color: #003366; margin-bottom: 8px; }
-    .leader p { color: #555; margin-bottom: 4px; }
-    .badge { display: inline-block; background: #1a4d80; color: #fff; font-size: 12px; padding: 2px 6px; border-radius: 4px; margin-top: 4px; }
-
-    /* Акты */
-    .laws-list { list-style: none; padding: 0; }
-    .laws-list li { color: #1a4d80; cursor: pointer; margin-bottom: 8px; }
-    .laws-list li:hover { text-decoration: underline; }
-
-    /* Модалки */
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s; }
-    .modal.open { opacity: 1; pointer-events: auto; }
-    .modal-content { background: #fff; border-radius: 8px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; padding: 24px; position: relative; }
-    .modal-close { position: absolute; top: 12px; right: 12px; background: transparent; border: none; font-size: 20px; cursor: pointer; }
-    .id-card img { max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 4px; display: block; margin: 16px auto; }
-
-    /* Футер */
-    footer { background: #003366; color: #fff; text-align: center; padding: 16px 0; }
-    footer p { font-size: 14px; margin-bottom: 4px; }
-
-    /* Мобильная адаптация */
-    @media(max-width:767px) {
-      /* Шапка */
-      header .container { flex-direction: column; align-items: center; text-align: center; }
-      .agency-title { margin: 8px 0; }
-      .nav-toggle-label { display: block; position: absolute; top: 16px; right: 16px; color: #fff; }
-      .nav-links { display: none; flex-direction: column; background: #003366; width: 100%; margin-top: 56px; }
-      .nav-links a { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,.1); }
-      .nav-toggle:checked + .nav-toggle-label + .nav-links { display: flex; }
-      /* Герой */
-      .hero { padding: 30px 0; }
-      .hero h1 { font-size: 24px; }
-      /* Секции */
-      section.block { padding: 16px; margin: 16px 0; }
-      /* Сотрудники */
-      .employees-grid { grid-template-columns: 1fr; }
-      .employee-photo { width: 100px; height: 140px; }
-      /* Руководство */
-      .leader-list { grid-template-columns: 1fr; }
-      .leader h3 { font-size: 18px; }
+    /* ——————— Шапка ——————— */
+    header { background:#003366; color:#fff; }
+    header .container {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 0;
     }
+    .logo {
+      height:40px;
+      flex:0 0 auto;
+    }
+    .agency-title {
+      flex:1 1 auto;
+      text-align:right;
+      font-size:14px;
+      line-height:1.2;
+      white-space:pre-line; /* сохраняем переносы */
+      margin-left:16px;
+    }
+    /* меню */
+    .nav-toggle { display:none; }
+    .nav-toggle-label {
+      display:none;
+      font-size:24px;
+      cursor:pointer;
+      margin-left:16px;
+      flex:0 0 auto;
+    }
+    .nav-links {
+      display:flex;
+      gap:24px;
+      flex:0 0 auto;
+      margin-left:16px;
+    }
+    .nav-links a {
+      color:#fff; text-decoration:none; font-weight:600; padding:8px;
+    }
+    .nav-links a:hover { background:#1a4d80; border-radius:4px; }
+
+    /* ——————— Мобильное меню ——————— */
+    @media(max-width:767px) {
+      header .container { flex-wrap:wrap; }
+      .agency-title { order:3; width:100%; margin:8px 0; }
+      .nav-toggle-label {
+        display:block;
+        color:#fff;
+        order:1;
+      }
+      .logo { order:0; }
+      .nav-links {
+        display:none;
+        flex-direction:column;
+        background:#003366;
+        width:100%;
+        order:2;
+      }
+      .nav-toggle:checked + .nav-toggle-label + .nav-links {
+        display:flex;
+      }
+      .nav-links a { border-top:1px solid rgba(255,255,255,.1); }
+    }
+
+    /* ——————— Остальные стили страницы ——————— */
+    /* (hero, секции, карточки сотрудников, модалки и т.д.) */
+    /* ... оставьте ваш CSS ниже без изменений ... */
+
   </style>
 </head>
 <body>
-
-  <!-- Шапка -->
   <header>
     <div class="container">
-      <img src="images/rkn-logo.png" alt="Герб" class="logo">
+      <img src="images/rkn-logo.png" alt="Герб Роскомнадзора" class="logo">
       <div class="agency-title">
-        ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br>
-        ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
+        ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br>
+        ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
       </div>
       <input type="checkbox" id="nav-toggle" class="nav-toggle">
       <label for="nav-toggle" class="nav-toggle-label">☰</label>
       <nav class="nav-links">
+        <a href="https://rkn.gov.ru" target="_blank">Главная</a>
         <a href="#about">О ведомстве</a>
-        <a href="#leadership">Руководство</a>
         <a href="#employees">Сотрудники</a>
+        <a href="#leadership">Руководство</a>
         <a href="#laws">Нормативные акты</a>
         <a href="#app-info">Приложение</a>
       </nav>

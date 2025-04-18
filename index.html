@@ -52,27 +52,40 @@
     .nav-links a:hover { background:#1a4d80; border-radius:4px; }
 
     /* ——————— Мобильное меню ——————— */
-    @media(max-width:767px) {
-      header .container { flex-wrap:wrap; }
-      .agency-title { order:3; width:100%; margin:8px 0; }
-      .nav-toggle-label {
-        display:block;
-        color:#fff;
-        order:1;
-      }
-      .logo { order:0; }
-      .nav-links {
-        display:none;
-        flex-direction:column;
-        background:#003366;
-        width:100%;
-        order:2;
-      }
-      .nav-toggle:checked + .nav-toggle-label + .nav-links {
-        display:flex;
-      }
-      .nav-links a { border-top:1px solid rgba(255,255,255,.1); }
-    }
+@media (max-width: 767px) {
+  header .container {
+    flex-wrap: wrap;
+    justify-content: flex-start; /* выравниваем всё по левому краю */
+  }
+  .logo {
+    margin-right: auto; /* логотип «прижимается» слева, остальное уезжает вправо */
+  }
+  .nav-toggle-label {
+    display: block;
+    color: #fff;
+    order: 1;
+  }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #003366;
+    width: 100%;
+    order: 2;
+  }
+  .nav-toggle:checked + .nav-toggle-label + .nav-links {
+    display: flex;
+  }
+  .nav-links a {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .agency-title {
+    order: 3;
+    width: 100%;
+    margin: 8px 0;
+    text-align: right; /* текст ведомства справа */
+  }
+}
 
     /* ——————— Остальные стили страницы ——————— */
     /* (hero, секции, карточки сотрудников, модалки и т.д.) */

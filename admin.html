@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin: Управление сотрудниками</title>
+  <style>
+    body{font-family:sans-serif;padding:20px;max-width:600px;margin:auto;}
+    label,input,select{display:block;width:100%;margin-bottom:12px;}
+    button{padding:8px 16px;}
+    table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+    th,td{border:1px solid #ccc;padding:8px;text-align:left;}
+  </style>
+</head>
+<body>
+  <h1>Админка: редактирование сотрудников</h1>
 
+  <label>
+    Ваш GitHub Personal Access Token<br>
+    <input type="password" id="token" placeholder="ghp_…">
+  </label>
+
+  <button id="load">Загрузить список сотрудников</button>
+
+  <table id="tbl" style="display:none;">
+    <thead>
+      <tr><th>Имя</th><th>Телефон</th><th>Действия</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const owner = 'Scrolixx';           // ← замените на ваш GitHub‑логин
+    const repo  = 'rkn-staff';          // ← замените на имя вашего репо
+    const path  = 'employees.json';     // путь к файлу в репо
+
+    document.getElementById('load').onclick = async () => {
+      const token = document.getElementById('token').value.trim();
+      if(!token){ return alert('Нужен токен'); }
+
+      // 1) получить employees.json из репо
+      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+        headers: { Authorization: 'token ' + token }
+      });
+      if(!res.ok) return alert('Ошибка загрузки списка');
+      const info = await res.json();
+      const content = atob(info.content.replace(/\n/g,''));  // base64 → строка
+      const employees = JSON.parse(content);
+
+      // 2) показать таблицу
+      const tbody = document.querySelector('#tbl tbody');
+      tbody.innerHTML = '';
+      employees.forEach(e=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${e.name}</td>
+          <td>
+            <input type="text" value="${e.phone}" data-id="${e.id}" style="width:100%">
+          </td>
+          <td>
+            <button data-id="${e.id}">Сохранить</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('tbl').style.display = 'table';
+
+      // 3) прикрепить обработчик на каждую кнопку «Сохранить»
+      tbody.querySelectorAll('button').forEach(btn=>{
+        btn.onclick = async () => {
+          const id = btn.dataset.id;
+          const input = tbody.querySelector(`input[data-id="${id}"]`);
+          const newPhone = input.value.trim();
+          // обновляем в массиве
+          const emp = employees.find(x=>x.id==id);
+          emp.phone = newPhone;
+
+          // перекодируем новый JSON в base64
+          const newContent = btoa(JSON.stringify(employees, null, 2));
+
+          // 4) делаем PUT‑запрос, чтобы перезаписать файл
+          const commitRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+            method: 'PUT',
+            headers: {
+              Authorization: 'token ' + token,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              message: `Обновлён телефон сотрудника ${emp.name}`,
+              content: newContent,
+              sha: info.sha
+            })
+          });
+          if(commitRes.ok) {
+            alert(`Телефон у ${emp.name} обновлён!`);
+          } else {
+            alert('Ошибка при сохранении');
+            console.error(await commitRes.json());
+          }
+        };
+      });
+    };
+  </script>
+</body>
+</html>

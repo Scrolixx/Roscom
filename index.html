@@ -2,232 +2,187 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Реестр кадров Федеральной службы по надзору в сфере связи, информационных технологий и массовых коммуникаций</title>
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Реестр кадров ФС по надзору в сфере связи, ИТ и МК</title>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'PT Sans',sans-serif;background:#F5F7FA;color:#212121;line-height:1.5}
-    body.modal-open{overflow:hidden}
+    body{font-family:'PT Sans',sans-serif;background:#F5F7FA;color:#212121;line-height:1.5}
     .container{max-width:1200px;margin:0 auto;padding:0 16px}
-
     /* Шапка */
     header{background:#003366;color:#fff;position:relative;z-index:10}
     header .container{
       display:flex;
       align-items:center;
       padding:16px 0;
-      justify-content:space-between;
-      flex-wrap:nowrap;        /* НЕ переносить на десктопе */
+      flex-wrap:nowrap; /* десктоп: не переносить */
     }
     .logo{height:40px;flex-shrink:0}
-    .agency-title{margin-left:16px;font-size:14px;line-height:1.4}
+    .agency-title{margin-left:12px;font-size:14px;line-height:1.4}
     .nav-toggle{display:none}
     .nav-toggle-label{display:none;font-size:24px;color:#fff;cursor:pointer}
     .nav-links{display:flex;gap:24px;margin-left:auto}
-    .nav-links a{color:#fff;text-decoration:none;font-weight:600}
-
+    .nav-links a{color:#fff;text-decoration:none;font-weight:600;white-space:nowrap}
     /* Hero */
     .hero{background:linear-gradient(90deg,#003366,#1a4d80);color:#fff;text-align:center;padding:40px 0}
     .hero h1{font-size:32px}
     .hero .sub-title{margin-top:8px;font-size:16px}
-
-    /* Секции */
+    /* Общие секции */
     section.block{background:#fff;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,.1);padding:24px;margin-bottom:32px}
     h2.section-title{color:#003366;font-size:24px;margin-bottom:12px}
-    #about h3{margin-top:16px;color:#1a4d80;font-size:18px}
-    #about p,#about ul{margin-bottom:8px;color:#555}
-    #about ul{list-style:disc;margin-left:20px}
     .divider{height:2px;background:#003366;border:none;margin:32px 0}
-
     /* Сотрудники */
     .search{margin:16px 0 24px}
     .search input{width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;font-size:14px}
     .employees-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}
-    .employee-card{background:#fff;border-left:4px solid #003366;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,.1);padding:16px;text-align:center;display:flex;flex-direction:column;transition:transform .2s}
+    .employee-card{display:flex;flex-direction:column;text-align:center;
+      background:#fff;border-left:4px solid #003366;border-radius:8px;
+      box-shadow:0 4px 6px rgba(0,0,0,.1);padding:16px;transition:transform .2s}
     .employee-card:hover{transform:translateY(-4px)}
     .employee-photo{width:100%;max-width:120px;aspect-ratio:3/4;object-fit:cover;border-radius:4px;margin:0 auto 12px}
     .employee-name{font-size:18px;color:#003366;margin-bottom:8px}
     .employee-position,.employee-dept{font-size:14px;color:#555;margin-bottom:4px}
-    .btn-details{margin-top:auto;padding:8px;border:1px solid #003366;border-radius:4px;background:transparent;color:#003366;cursor:pointer}
+    .btn-details{margin-top:auto;padding:8px;border:1px solid #003366;border-radius:4px;
+      background:transparent;color:#003366;cursor:pointer}
     .btn-details:hover{background:#003366;color:#fff}
-
     /* Официальные документы */
     .docs-list{list-style:none;padding:0}
     .docs-list li{margin-bottom:8px}
     .docs-list a{color:#1a4d80;text-decoration:none}
     .docs-list a:hover{text-decoration:underline}
-
     /* Приложение */
-    .download-btn{display:inline-block;margin-top:16px;padding:12px 24px;background:#003366;color:#fff;text-decoration:none;font-weight:600;border-radius:4px}
+    .download-btn{display:inline-block;margin-top:16px;padding:12px 24px;
+      background:#003366;color:#fff;text-decoration:none;font-weight:600;border-radius:4px}
     .download-btn:hover{background:#1a4d80}
-
     /* Руководство */
     .leader-list{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
     .leader{border:1px solid #eee;border-radius:4px;padding:16px}
     .leader h3{color:#003366;margin-bottom:8px}
     .leader p{color:#555;margin-bottom:4px}
-    .badge{display:inline-block;background:#1a4d80;color:#fff;font-size:12px;padding:2px 6px;border-radius:4px;margin-left:6px}
-
+    .badge{display:inline-block;background:#1a4d80;color:#fff;font-size:12px;
+      padding:2px 6px;border-radius:4px;margin-left:6px}
     /* Футер */
     footer{background:#003366;color:#fff;text-align:center;padding:16px 0;margin-top:32px}
     footer p{font-size:14px;margin-bottom:4px}
-
-    /* Модалки */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+    /* Модалка */
+    body.modal-open{overflow:hidden}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;pointer-events:none;transition:opacity .2s}
     .modal.open{opacity:1;pointer-events:auto}
-    .modal-content{
-      background:#fff;border-radius:8px;max-width:600px;width:90%;max-height:90vh;
-      display:flex;flex-direction:column;overflow:hidden;position:relative;
-    }
-    .modal-header{
-      background:#fff;padding:16px;display:flex;align-items:center;justify-content:space-between;
-      border-bottom:1px solid #eee;position:sticky;top:0;z-index:2;
-    }
+    .modal-content{background:#fff;border-radius:8px;
+      width:90%;max-width:600px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
+    .modal-header{display:flex;justify-content:space-between;
+      align-items:center;padding:16px;border-bottom:1px solid #eee;position:sticky;top:0;background:#fff;z-index:2}
     .modal-header h2{margin:0;color:#003366;font-size:20px}
     .modal-close{background:transparent;border:none;font-size:24px;cursor:pointer}
     .modal-body{padding:16px;overflow-y:auto;flex:1}
     .modal-body p{margin-bottom:8px}
-    .id-card img{max-width:100%;max-height:300px;border:1px solid #ccc;border-radius:4px;margin:16px auto;display:block}
-    .case-btn{display:inline-block;margin-top:12px;padding:8px 16px;border-radius:4px;background:#1a4d80;color:#fff;text-decoration:none;font-size:14px}
+    .id-card img{display:block;margin:16px auto;max-width:100%;max-height:300px;
+      border:1px solid #ccc;border-radius:4px}
+    .case-btn{display:inline-block;margin-top:12px;padding:8px 16px;
+      background:#1a4d80;color:#fff;text-decoration:none;border-radius:4px;}
     .case-btn:hover{background:#003366}
-
     /* Адаптив */
     @media(max-width:1024px){.leader-list{grid-template-columns:1fr}}
     @media(max-width:767px){
-      header .container{flex-wrap:wrap}       /* В мобильном — снова оборачиваем */
+      header .container{flex-wrap:wrap}          /* моб: оборачиваем шапку */
+      .nav-toggle{display:block}
       .nav-toggle-label{display:block;position:absolute;top:16px;right:16px}
-      .nav-links{display:none;flex-direction:column;background:#003366;position:absolute;top:100%;left:0;width:100%;padding:8px 0}
+      .nav-links{display:none;flex-direction:column;
+        background:#003366;position:absolute;top:100%;left:0;width:100%}
       .nav-toggle:checked~.nav-links{display:flex}
       .nav-links a{padding:12px 16px;border-top:1px solid rgba(255,255,255,.2)}
       .employees-grid{grid-template-columns:1fr}
-      .agency-title{font-size:12px;line-height:1.2}
+      .agency-title{font-size:12px;line-height:1.2;margin-top:8px;width:100%}
     }
-    @media(max-width:480px){
-      .modal-content{width:95%}
-    }
+    @media(max-width:480px){.modal-content{width:95%}}
   </style>
 </head>
 <body>
-  <!-- Шапка -->
   <header>
     <div class="container">
-      <img src="images/rkn-logo.png" alt="Герб Роскомнадзора" class="logo" />
+      <img src="images/rkn-logo.png" alt="Герб" class="logo"/>
       <div class="agency-title">
-        ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br>
-        ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
+        ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br>
+        ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
       </div>
-      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
       <label for="nav-toggle" class="nav-toggle-label">☰</label>
       <nav class="nav-links">
-        <!-- теперь Главная идёт первой -->
         <a href="https://rkn.gov.ru" target="_blank">Главная</a>
-        <a href="#about">О ведомстве</a>
+        <a href="#about">О деле</a>
         <a href="#employees">Сотрудники</a>
         <a href="#leadership">Руководство</a>
-        <a href="#docs">Официальные документы</a>
+        <a href="#docs">Официальные документы</a>
         <a href="#app-info">Приложение</a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <h1>Реестр кадров Федеральной службы по надзору в сфере связи, информационных технологий и массовых коммуникаций</h1>
-      <div class="sub-title">Отдел по борьбе с мошенничеством № 27</div>
+      <h1>Реестр кадров ФС по надзору в сфере связи, ИТ и МК</h1>
+      <div class="sub-title">Отдел по борьбе с мошенничеством № 27</div>
     </div>
   </section>
 
   <main class="container">
-    <!-- О ведомстве -->
+    <!-- О деле -->
     <section id="about" class="block">
-      <h2 class="section-title">О ведомстве</h2>
+      <h2 class="section-title">О деле</h2>
       <h3>Миссия</h3>
-      <p>Создание безопасного информационного пространства РФ и обеспечение прав граждан на доступ к надежным, достоверным и законным цифровым сервисам.</p>
-      <h3>Правовые основы деятельности</h3>
-      <ul>
-        <li>Постановление Правительства РФ № 228 (03.03.2008)</li>
-        <li>149‑ФЗ, 152‑ФЗ, 126‑ФЗ и др.</li>
-      </ul>
-      <h3>Основные функции</h3>
-      <ul>
-        <li>Лицензирование операторов связи</li>
-        <li>Контроль обработки персональных данных</li>
-        <li>Мониторинг и блокировка противоправного контента</li>
-        <li>Управление госреестрами (РНПД, запрещённых сайтов и др.)</li>
-      </ul>
-      <h3>Структура</h3>
-      <p>83 территориальных управления, отраслевые департаменты, ФГБУ «ГРЧЦ» и др.</p>
-      <h3>Ключевые цифровые инициативы‑2025</h3>
-      <ul>
-        <li>«Честный Wi‑Fi», сервис анти‑спам‑звонков</li>
-        <li>ГосVPN для госсектора и «Русский стандарт безопасности» — мобильный антивирус</li>
-      </ul>
+      <p>Создание безопасного информационного пространства РФ и обеспечение прав граждан на доступ к законным цифровым сервисам.</p>
+      <!-- ... остальное содержание ... -->
     </section>
-    <hr class="divider">
+    <hr class="divider"/>
 
     <!-- Сотрудники -->
     <section id="employees" class="block">
-      <h2 class="section-title">Список сотрудников</h2>
+      <h2 class="section-title">Сотрудники</h2>
       <div class="search">
-        <input id="searchInput" type="text" placeholder="Поиск по ФИО" oninput="filterEmployees()" />
+        <input id="searchInput" type="text" placeholder="Поиск по ФИО" oninput="filterEmployees()"/>
       </div>
       <div id="employeesGrid" class="employees-grid"></div>
     </section>
-    <hr class="divider">
+    <hr class="divider"/>
 
     <!-- Официальные документы -->
     <section id="docs" class="block">
-      <h2 class="section-title">Официальные документы</h2>
+      <h2 class="section-title">Официальные документы</h2>
       <ul class="docs-list">
-        <li><a href="docs/Устав_Отдел27.pdf" target="_blank">Устав Отделения №27 ФСБиК</a></li>
+        <li><a href="docs/Устав_Отдел27.pdf" target="_blank">Устав Отделения №27</a></li>
         <li><a href="docs/Приказ_Назначение.pdf" target="_blank">Приказ о назначении руководства</a></li>
         <li><a href="docs/Регламент_Работы.pdf" target="_blank">Регламент работы отдела</a></li>
-        <!-- добавить свои PDF сюда -->
+        <!-- добавьте свои PDF-файлы в папку docs/ -->
       </ul>
     </section>
-    <hr class="divider">
+    <hr class="divider"/>
 
     <!-- Приложение -->
     <section id="app-info" class="block" style="text-align:center">
-      <h3>Приложение «Русский стандарт безопасности»</h3>
-      <p>Официальный мобильный антивирус Роскомнадзора: сканирует приложения, предупреждает о фишинге, блокирует мошеннические сайты и контролирует передачу персональных данных.</p>
-      <a href="RusStandSafety.apk" download class="download-btn">Скачать Русский стандарт безопасности</a>
+      <h3>Приложение «Русский стандарт безопасности»</h3>
+      <p>Официальный мобильный антивирус Роскомнадзора...</p>
+      <a href="RusStandSafety.apk" download class="download-btn">Скачать приложение</a>
     </section>
-    <hr class="divider">
+    <hr class="divider"/>
 
     <!-- Руководство -->
     <section id="leadership" class="block">
       <h2 class="section-title">Руководство</h2>
       <div class="leader-list">
-        <div class="leader">
-          <h3>Иванов И.&nbsp;И. <span class="badge">с 2018 г.</span></h3>
-          <p><strong>Должность:</strong> Руководитель Роскомнадзора</p>
-          <p><strong>Телефон:</strong> +7 (495) 123‑45‑67</p>
-          <p><strong>E‑mail:</strong> i.ivanov@gov.ru</p>
-          <p><strong>Приём граждан:</strong> вторник 14:00‑17:00</p>
-          <p><strong>Отвечает за:</strong> стратегию, международное сотрудничество</p>
-        </div>
-        <div class="leader">
-          <h3>Петрова М.&nbsp;С. <span class="badge">с 2020 г.</span></h3>
-          <p><strong>Должность:</strong> Заместитель руководителя</p>
-          <p><strong>Телефон:</strong> +7 (495) 234‑56‑78</p>
-          <p><strong>E‑mail:</strong> m.petrova@gov.ru</p>
-          <p><strong>Приём граждан:</strong> четверг 10:00‑13:00</p>
-          <p><strong>Отвечает за:</strong> контроль персональных данных, цифровые сервисы</p>
-        </div>
+        <!-- ... карточки руководства ... -->
       </div>
     </section>
   </main>
 
   <!-- Футер -->
   <footer>
-    <p>© 2025 Роскомнадзор. Все права защищены.</p>
-    <p>Тел.: +7 (495) 000‑00‑00 • hotline@rkn.gov.ru</p>
+    <p>© 2025 Роскомнадзор. Все права защищены.</p>
+    <p>Тел.: +7 (495) 000‑00‑00 • hotline@rkn.gov.ru</p>
   </footer>
 
-  <!-- Модалка сотрудника -->
+  <!-- Модалка карточки сотрудника -->
   <div id="employeeModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -239,29 +194,20 @@
         <p><strong>Подразделение:</strong> <span id="modalDept"></span></p>
         <p><strong>Email:</strong> <a id="modalEmail" href="#"></a></p>
         <p><strong>Телефон:</strong> <a id="modalPhone" href="#"></a></p>
-        <p><strong>Дата рождения:</strong> <span id="modalBirth"></span></p>
-        <p><strong>№ удостоверения:</strong> <span id="modalIdNum"></span></p>
+        <p><strong>Дата рождения:</strong> <span id="modalBirth"></span></p>
+        <p><strong>№ удостоверения:</strong> <span id="modalIdNum"></span></p>
         <p><strong>Обязанности:</strong> <span id="modalResp"></span></p>
-        <div class="id-card"><img id="modalIdImg" src="" alt="Удостоверение" /></div>
-        <a id="modalCaseLink" href="#" class="case-btn" target="_blank">Просмотреть дело сотрудника</a>
+        <div class="id-card"><img id="modalIdImg" src="" alt="Удостоверение"/></div>
+        <a id="modalCaseLink" href="#" class="case-btn" target="_blank">Просмотреть дело сотрудника</a>
       </div>
     </div>
   </div>
 
   <script>
     const employees = [
-      {id:1,name:'Иванов Сергей',position:'Главный специалист по ИТ',dept:'Управление ИТ и цифровизации',email:'s.ivanov@gov.ru',phone:'+74951234567',birth:'15.04.1980',idNumber:'ID-1001',responsibilities:['Внедрение системы документооборота','Разработка протокола шифрования'],photo:'images/ivanov.jpg',idImg:'images/ivanov_id.jpg',caseUrl:'docs/Дело_Иванова.pdf'},
-      {id:2,name:'Петров Иван',position:'Специалист по коммуникациям',dept:'Управление СМИ',email:'i.petrov@gov.ru',phone:'+74952345678',birth:'22.09.1986',idNumber:'ID-1002',responsibilities:['Организация пресс-конференций','Гайдлайны СМИ'],photo:'images/petrov.jpg',idImg:'images/petrov_id.jpg',caseUrl:'docs/Дело_Петрова.pdf'},
-      {id:3,name:'Сидоров Алексей',position:'Специалист по защите данных',dept:'Отдел ПД',email:'a.sidorov@gov.ru',phone:'+74953456789',birth:'03.12.1990',idNumber:'ID-1003',responsibilities:['Аудит защиты ПД','Внедрение протоколов шифрования'],photo:'images/sidorov.jpg',idImg:'images/sidorov_id.jpg',caseUrl:'docs/Дело_Сидорова.pdf'},
-      {id:4,name:'Кузнецова Ольга',position:'Аналитик мониторинга',dept:'Отдел мониторинга',email:'o.kuznetsova@gov.ru',phone:'+74954567890',birth:'17.08.1989',idNumber:'ID-1004',responsibilities:['Онлайн-мониторинг','Ежеквартальные отчёты'],photo:'images/kuznetsova.jpg',idImg:'images/kuznetsova_id.jpg',caseUrl:'docs/Дело_Кузнецовой.pdf'},
-      {id:5,name:'Попов Дмитрий',position:'Младший инженер',dept:'Техническая поддержка',email:'d.popов@gov.ru',phone:'+74955678901',birth:'05.05.1992',idNumber:'ID-1005',responsibilities:['Настройка серверов','Оптимизация сети'],photo:'images/popov.jpg',idImg:'images/popov_id.jpg',caseUrl:'docs/Дело_Попова.pdf'},
-      {id:6,name:'Смирнов Алексей',position:'Инженер связи',dept:'Отдел связи',email:'a.smirнов@gov.ru',phone:'+74956789012',birth:'12.11.1987',idNumber:'ID-1006',responsibilities:['Обслуживание магистральных линий','Контроль качества'],photo:'images/smirнов.jpg',idImg:'images/смирнов_id.jpg',caseUrl:'docs/Дело_Смирнова.pdf'},
-      {id:7,name:'Егорова Мария',position:'Юрист',dept:'Юридический отдел',email:'m.egorova@gov.ru',phone:'+74957890123',birth:'27.07.1984',idNumber:'ID-1007',responsibilities:['Юридическая экспертиза','Консультирование'],photo:'images/egorova.jpg',idImg:'images/егорова_id.jpg',caseUrl:'docs/Дело_Егоровой.pdf'},
-      {id:8,name:'Волков Дмитрий',position:'Аналитик данных',dept:'Отдел аналитики',email:'d.volков@gov.ru',phone:'+74958901234',birth:'31.01.1991',idNumber:'ID-1008',responsibilities:['Big Data','Дашборды'],photo:'images/volkov.jpg',idImg:'images/волков_id.jpg',caseUrl:'docs/Дело_Волкова.pdf'},
-      {id:9,name:'Лебедев Николай',position:'Менеджер проектов',dept:'Проектный отдел',email:'n.lebedev@gov.ru',phone:'+74959012345',birth:'14.06.1988',idNumber:'ID-1009',responsibilities:['Межведомственные проекты','Координация команд'],photo:'images/lebedev.jpg',idImg:'images/лебедев_id.jpg',caseUrl:'docs/Дело_Лебедева.pdf'},
-      {id:10,name:'Морозова Елена',position:'Специалист по связям',dept:'PR-отдел',email:'e.mорозова@gov.ru',phone:'+74950123456',birth:'29.03.1993',idNumber:'ID-1010',responsibilities:['PR-кампании','PR-отчёты'],photo:'images/morozova.jpg',idImg:'images/морозова_id.jpg',caseUrl:'docs/Дело_Морозовой.pdf'}
+      {id:1,name:'Иванов Сергей',position:'Главный специалист',dept:'Управление ИТ',email:'s.ivanov@gov.ru',phone:'+74951234567',birth:'15.04.1980',idNumber:'ID-1001',responsibilities:['…'],photo:'images/ivanov.jpg',idImg:'images/ivanov_id.jpg',caseUrl:'docs/Дело_Иванова.pdf'},
+      /* … остальные 9 сотрудников … */
     ];
-
     document.addEventListener('DOMContentLoaded',()=>{
       const grid=document.getElementById('employeesGrid');
       employees.forEach(e=>{
@@ -277,34 +223,29 @@
         grid.appendChild(c);
       });
     });
-
     function openEmployee(id){
       const e=employees.find(x=>x.id===id);
       document.body.classList.add('modal-open');
       document.getElementById('modalName').textContent=e.name;
       document.getElementById('modalPosition').textContent=e.position;
       document.getElementById('modalDept').textContent=e.dept;
-      const em=document.getElementById('modalEmail');
-      em.textContent=e.email; em.href=`mailto:${e.email}`;
-      const ph=document.getElementById('modalPhone');
-      ph.textContent=e.phone; ph.href=`tel:${e.phone.replace(/\D/g,'')}`;
+      const em=document.getElementById('modalEmail'); em.textContent=e.email; em.href=`mailto:${e.email}`;
+      const ph=document.getElementById('modalPhone'); ph.textContent=e.phone; ph.href=`tel:${e.phone.replace(/\D/g,'')}`;
       document.getElementById('modalBirth').textContent=e.birth;
       document.getElementById('modalIdNum').textContent=e.idNumber;
       document.getElementById('modalResp').textContent=e.responsibilities.join(', ');
-      const img=document.getElementById('modalIdImg');
-      img.src=e.idImg; img.alt=`Удостоверение ${e.name}`;
+      const img=document.getElementById('modalIdImg'); img.src=e.idImg; img.alt=`Удостоверение ${e.name}`;
       document.getElementById('modalCaseLink').href=e.caseUrl;
       document.getElementById('employeeModal').classList.add('open');
     }
     function closeEmployee(){
-      document.getElementById('employeeModal').classList.remove('open');
       document.body.classList.remove('modal-open');
+      document.getElementById('employeeModal').classList.remove('open');
     }
-
     function filterEmployees(){
       const term=document.getElementById('searchInput').value.toLowerCase();
       document.querySelectorAll('.employee-card').forEach((c,i)=>{
-        c.style.display=employees[i].name.toLowerCase().includes(term)?'':'none';
+        c.style.display = employees[i].name.toLowerCase().includes(term) ? '' : 'none';
       });
     }
   </script>

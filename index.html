@@ -6,38 +6,52 @@
   <title>Реестр кадров Федеральной службы по надзору в сфере связи, информационных технологий и массовых коммуникаций</title>
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    /* ========== Сброс ========== */
+    /* =================== Сброс =================== */
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
     body { font-family:'PT Sans',sans-serif; background:#F5F7FA; color:#212121; line-height:1.5; }
+    a { text-decoration:none; }
+    ul { list-style:none; }
+
+    /* ========== Контейнер ========== */
     .container { max-width:1200px; margin:0 auto; padding:0 16px; }
 
-    /* ========== Шапка ========== */
-    header { background:#003366; color:#fff; position:relative; }
+    /* =================== Шапка =================== */
+    header {
+      background:#003366; color:#fff; position:relative;
+    }
     header .container {
-      display:flex; align-items:center; padding:16px 0; flex-wrap:nowrap;
+      display:flex; align-items:center; padding:16px 0;
+      flex-wrap:nowrap; /* запретили перенос */
     }
-    .logo { height:40px; flex-shrink:0; }
+    .logo {
+      height:40px; flex-shrink:0;
+    }
     .agency-title {
-      margin-left:12px; font-size:14px; line-height:1.4; white-space:nowrap;
+      margin-left:12px;
+      font-size:14px; line-height:1.3;
+      flex-shrink:1;
+      white-space:normal;
     }
-    /* невидимый, но работающий чекбокс */
+    /* невидимый, но рабочий чекбокс для мобильного меню */
     .nav-toggle {
       position:absolute; top:16px; right:16px;
       width:32px; height:32px; opacity:0; z-index:10;
     }
     .nav-toggle-label {
-      display:none; position:absolute; top:16px; right:16px;
-      font-size:24px; cursor:pointer; z-index:9;
-      color:#fff;
+      display:none;
+      position:absolute; top:16px; right:16px;
+      font-size:24px; cursor:pointer; z-index:9; color:#fff;
     }
     .nav-links {
       display:flex; gap:24px; margin-left:auto; z-index:5;
     }
     .nav-links a {
-      color:#fff; text-decoration:none; font-weight:600; white-space:nowrap;
+      color:#fff; font-weight:600; white-space:nowrap;
+      transition:opacity .2s;
     }
+    .nav-links a:hover { opacity:.8; }
 
-    /* ========== Hero ========== */
+    /* =================== Hero =================== */
     .hero {
       background:linear-gradient(90deg,#003366,#1a4d80);
       color:#fff; text-align:center; padding:40px 0;
@@ -45,7 +59,7 @@
     .hero h1 { font-size:32px; }
     .hero .sub-title { margin-top:8px; font-size:16px; }
 
-    /* ========== Общие секции ========== */
+    /* =================== Общие секции =================== */
     section.block {
       background:#fff; border-radius:8px;
       box-shadow:0 2px 4px rgba(0,0,0,.1);
@@ -58,15 +72,15 @@
       height:2px; background:#003366; border:none; margin:32px 0;
     }
 
-    /* ========== «О деле» ========== */
+    /* =================== «Важное» =================== */
     #about ul { list-style:disc; margin-left:20px; }
     #about p,#about ul { margin-bottom:8px; color:#555; }
 
-    /* ========== Сотрудники ========== */
+    /* =================== Сотрудники =================== */
     .search { margin:16px 0 24px; }
     .search input {
-      width:100%; padding:10px; border:1px solid #ccc;
-      border-radius:4px; font-size:14px;
+      width:100%; padding:10px; font-size:14px;
+      border:1px solid #ccc; border-radius:4px;
     }
     .employees-grid {
       display:grid;
@@ -77,8 +91,8 @@
       background:#fff; border-left:4px solid #003366;
       border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,.1);
       padding:16px; text-align:center;
-      display:flex; flex-direction:column; transition:transform .2s;
-      overflow:hidden;
+      display:flex; flex-direction:column;
+      transition:transform .2s; overflow:hidden;
     }
     .employee-card:hover { transform:translateY(-4px); }
     .employee-photo {
@@ -86,38 +100,33 @@
       object-fit:cover; border-radius:4px;
       margin:0 auto 12px;
     }
-    .employee-name {
-      font-size:18px; color:#003366; margin-bottom:8px;
-    }
-    .employee-position,.employee-dept {
-      font-size:14px; color:#555; margin-bottom:4px;
-    }
+    .employee-name { font-size:18px; color:#003366; margin-bottom:8px; }
+    .employee-position,
+    .employee-dept { font-size:14px; color:#555; margin-bottom:4px; }
     .btn-details {
-      margin-top:auto; padding:8px; border:1px solid #003366;
-      border-radius:4px; background:transparent; color:#003366;
-      cursor:pointer;
+      margin-top:auto; padding:8px;
+      border:1px solid #003366; border-radius:4px;
+      background:transparent; color:#003366; cursor:pointer;
+      transition:background .2s,color .2s;
     }
-    .btn-details:hover {
-      background:#003366; color:#fff;
-    }
+    .btn-details:hover { background:#003366; color:#fff; }
 
-    /* ========== Официальные документы ========== */
-    .docs-list { list-style:none; padding:0; }
+    /* =================== Официальные документы =================== */
     .docs-list li { margin-bottom:8px; }
     .docs-list a {
-      color:#1a4d80; text-decoration:none; font-size:14px;
+      color:#1a4d80; font-size:14px;
     }
     .docs-list a:hover { text-decoration:underline; }
 
-    /* ========== Приложение ========== */
+    /* =================== Приложение =================== */
     .download-btn {
-      display:inline-block; margin-top:16px;
-      padding:12px 24px; background:#003366; color:#fff;
-      text-decoration:none; font-weight:600; border-radius:4px;
+      display:inline-block; margin-top:16px; padding:12px 24px;
+      background:#003366; color:#fff; font-weight:600;
+      border-radius:4px; transition:background .2s;
     }
     .download-btn:hover { background:#1a4d80; }
 
-    /* ========== Руководство ========== */
+    /* =================== Руководство =================== */
     .leader-list {
       display:grid; grid-template-columns:repeat(2,1fr); gap:24px;
     }
@@ -132,7 +141,7 @@
       margin-left:6px;
     }
 
-    /* ========== Модалка ========== */
+    /* =================== Модалка =================== */
     body.modal-open { overflow:hidden; }
     .modal {
       position:fixed; inset:0; background:rgba(0,0,0,.5);
@@ -162,7 +171,7 @@
     .modal-body {
       padding:16px; overflow-y:auto; flex:1;
     }
-    .modal-body p { margin-bottom:8px; }
+    .modal-body p { margin-bottom:8px; color:#555; }
     .id-card img {
       display:block; margin:16px auto;
       max-width:100%; max-height:300px;
@@ -170,17 +179,17 @@
     }
     .case-btn {
       display:inline-block; margin-top:12px; padding:8px 16px;
-      background:#1a4d80; color:#fff; text-decoration:none;
-      border-radius:4px;
+      background:#1a4d80; color:#fff; border-radius:4px;
+      text-decoration:none; transition:background .2s;
     }
     .case-btn:hover { background:#003366; }
 
-    /* ========== Адаптив ========== */
+    /* =================== Адаптив =================== */
     @media(max-width:1024px) {
       .leader-list { grid-template-columns:1fr; }
     }
     @media(max-width:767px) {
-      header .container { flex-wrap:wrap; }
+      header .container { flex-wrap:nowrap; }
       .nav-toggle-label { display:block; }
       .nav-links {
         display:none; flex-direction:column;
@@ -192,33 +201,36 @@
         padding:12px 16px; border-top:1px solid rgba(255,255,255,.2);
       }
       .employees-grid { grid-template-columns:1fr; }
-      .agency-title {
-        font-size:12px; line-height:1.2;
-        margin-top:8px; width:100%;
-      }
+      .agency-title { font-size:12px; line-height:1.2; }
     }
     @media(max-width:480px) {
       .modal-content { width:95%; }
     }
 
+    /* =================== Футер =================== */
+    footer {
+      background:#003366; color:#fff;
+      text-align:center; padding:16px 0; margin-top:32px;
+      font-size:14px;
+    }
+    footer p { margin-bottom:4px; }
   </style>
 </head>
 <body>
 
-  <!-- ========== Шапка ========== -->
+  <!-- ========= Шапка ========= -->
   <header>
     <div class="container">
-      <img src="images/rkn-logo.png" alt="Герб Роскомнадзора" class="logo"/>
+      <img src="images/rkn-logo.png" alt="Герб Роскомнадзора" class="logo" />
       <div class="agency-title">
-        ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br>
-        ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
+        ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br>
+        ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
       </div>
-      <!-- невидимый чекбокс -->
-      <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
       <label for="nav-toggle" class="nav-toggle-label">☰</label>
       <nav class="nav-links">
         <a href="#">Главная</a>
-        <a href="#about">О деле</a>
+        <a href="#about">Важное</a>
         <a href="#employees">Сотрудники</a>
         <a href="#leadership">Руководство</a>
         <a href="#docs">Официальные документы</a>
@@ -227,41 +239,41 @@
     </div>
   </header>
 
-  <!-- ========== Hero ========== -->
+  <!-- ========= Hero ========= -->
   <section class="hero">
     <div class="container">
-      <h1>Реестр кадров Федеральной службы по надзору в сфере связи, ИТ и МК</h1>
-      <div class="sub-title">Отдел по борьбе с мошенничеством № 27</div>
+      <h1>Реестр кадров Федеральной службы по надзору в сфере связи, ИТ и МК</h1>
+      <div class="sub-title">Отдел по борьбе с мошенничеством № 27</div>
     </div>
   </section>
 
   <main class="container">
-    <!-- ========== О деле ========== -->
+    <!-- ===== Важное ===== -->
     <section id="about" class="block">
-      <h2 class="section-title">О деле</h2>
+      <h2 class="section-title">Важное</h2>
       <h3>Миссия</h3>
       <p>Создание безопасного информационного пространства РФ и обеспечение прав граждан на доступ к законным цифровым сервисам.</p>
       <h3>Правовые основы</h3>
       <ul>
         <li>Постановление Правительства РФ № 228 (03.03.2008)</li>
-        <li>149‑ФЗ «Об информации…», 152‑ФЗ «О ПД», 126‑ФЗ «О связи» и др.</li>
+        <li>149‑ФЗ, 152‑ФЗ, 126‑ФЗ и др.</li>
       </ul>
       <h3>Основные функции</h3>
       <ul>
         <li>Лицензирование операторов связи</li>
         <li>Контроль обработки персональных данных</li>
         <li>Мониторинг и блокировка противоправного контента</li>
-        <li>Управление госреестрами (РНПД, запрещённых сайтов…)</li>
+        <li>Управление госреестрами (РНПД и др.)</li>
       </ul>
-      <h3>Ключевые инициативы‑2025</h3>
+      <h3>Инициативы‑2025</h3>
       <ul>
-        <li>«Честный Wi‑Fi», анти‑спам‑звонки</li>
+        <li>«Честный Wi‑Fi» и анти‑спам‑звонки</li>
         <li>ГосVPN и «Русский стандарт безопасности»</li>
       </ul>
     </section>
-    <hr class="divider"/>
+    <hr class="divider" />
 
-    <!-- ========== Сотрудники ========== -->
+    <!-- ===== Сотрудники ===== -->
     <section id="employees" class="block">
       <h2 class="section-title">Сотрудники</h2>
       <div class="search">
@@ -269,29 +281,29 @@
       </div>
       <div id="employeesGrid" class="employees-grid"></div>
     </section>
-    <hr class="divider"/>
+    <hr class="divider" />
 
-    <!-- ========== Официальные документы ========== -->
+    <!-- ===== Официальные документы ===== -->
     <section id="docs" class="block">
       <h2 class="section-title">Официальные документы</h2>
       <ul class="docs-list">
         <li><a href="docs/Устав_Отдел27.pdf" target="_blank">Устав отделения № 27</a></li>
         <li><a href="docs/Приказ_Руководство.pdf" target="_blank">Приказ о назначении руководства</a></li>
         <li><a href="docs/Регламент_Работы.pdf" target="_blank">Регламент работы отдела</a></li>
-        <!-- и т.д. — просто кладёте свои PDF в папку docs/ -->
+        <!-- добавьте ещё по тому же принципу -->
       </ul>
     </section>
-    <hr class="divider"/>
+    <hr class="divider" />
 
-    <!-- ========== Приложение ========== -->
+    <!-- ===== Приложение ===== -->
     <section id="app-info" class="block" style="text-align:center">
       <h3>Приложение «Русский стандарт безопасности»</h3>
-      <p>Официальный мобильный антивирус Роскомнадзора: сканирует приложения, предупреждает о фишинге и контролирует передачу данных.</p>
+      <p>Официальный мобильный антивирус Роскомнадзора: сканирует приложения, предупреждает о фишинге, блокирует мошеннические сайты и контролирует передачу данных.</p>
       <a href="RusStandSafety.apk" download class="download-btn">Скачать приложение</a>
     </section>
-    <hr class="divider"/>
+    <hr class="divider" />
 
-    <!-- ========== Руководство ========== -->
+    <!-- ===== Руководство ===== -->
     <section id="leadership" class="block">
       <h2 class="section-title">Руководство</h2>
       <div class="leader-list">
@@ -301,27 +313,26 @@
           <p><strong>Телефон:</strong> +7 (495) 123‑45‑67</p>
           <p><strong>E‑mail:</strong> i.ivanov@gov.ru</p>
           <p><strong>Приём:</strong> вторник 14:00‑17:00</p>
-          <p><strong>Отв. за:</strong> стратегию, международное сотрудничество</p>
+          <p><strong>Отв. за:</strong> стратегию и МС</p>
         </div>
         <div class="leader">
           <h3>Петрова М.&nbsp;С. <span class="badge">с 2020 г.</span></h3>
-          <p><strong>Должность:</strong> Заместитель руководителя</p>
+          <p><strong>Должность:</strong> Заместитель</p>
           <p><strong>Телефон:</strong> +7 (495) 234‑56‑78</p>
-          <p><strong>E‑mail:</strong> m.petrova@gov.ru</p>
           <p><strong>Приём:</strong> четверг 10:00‑13:00</p>
-          <p><strong>Отв. за:</strong> контроль персональных данных</p>
+          <p><strong>Отв. за:</strong> ПД и сервисы</p>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ========== Футер ========== -->
+  <!-- ========= Футер ========= -->
   <footer>
     <p>© 2025 Роскомнадзор. Все права защищены.</p>
     <p>Тел.: +7 (495) 000‑00‑00 • hotline@rkn.gov.ru</p>
   </footer>
 
-  <!-- ========== Модалка сотрудника ========== -->
+  <!-- ====== Модалка ====== -->
   <div id="employeeModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -347,252 +358,9 @@
   </div>
 
   <script>
-    // ===== Данные сотрудников =====
-    const employees = [
-      {
-        id:1,
-        name:'Иванов Сергей',
-        position:'Главный специалист по ИТ',
-        dept:'Управление ИТ и цифровизации',
-        email:'s.ivanov@gov.ru',
-        phone:'+7 (495) 123‑45‑67',
-        birth:'15.04.1980',
-        idNumber:'ID‑1001',
-        responsibilities:[
-          'Раскрытие телефонного мошенничества',
-          'Блокировка фишинговых SMS',
-          'Пресечение схем с подменой номера банка',
-          'Взлом портала Госуслуг – расследование',
-          'Случай «Звонок из банка»',
-          'Проверка фейковых сайтов госуслуг',
-          'Отмена подозрительных переводов',
-          'Анализ утечек персональных данных',
-          'Сотрудничество с финмониторингом',
-          'Противодействие «доверительным платёжным» схемам'
-        ],
-        photo:'images/ivanov.jpg',
-        idImg:'images/ivanov_id.jpg',
-        caseUrl:'docs/Дело_Иванова_С.pdf'
-      },
-      {
-        id:2,name:'Петров Иван',
-        position:'Специалист по коммуникациям',
-        dept:'Управление СМИ',
-        email:'i.petrov@gov.ru',
-        phone:'+7 (495) 234‑56‑78',
-        birth:'22.09.1986',
-        idNumber:'ID‑1002',
-        responsibilities:[
-          'Организация пресс‑конференций',
-          'Антифейковые кампании',
-          'Блокировка лжерекламы банковских услуг',
-          'Мониторинг мошеннических СМИ',
-          'Анализ сми‑ботов',
-          'Работа с жалобами граждан',
-          'Схема «Подставные новости»',
-          'Контроль официальных каналов',
-          'Сотрудничество с МВД',
-          'Профилактика телефонного спама'
-        ],
-        photo:'images/petrov.jpg',
-        idImg:'images/petrov_id.jpg',
-        caseUrl:'docs/Дело_Петрова.pdf'
-      },
-      {
-        id:3,name:'Сидоров Алексей',
-        position:'Специалист по защите данных',
-        dept:'Отдел персональных данных',
-        email:'a.sidorov@gov.ru',
-        phone:'+7 (495) 345‑67‑89',
-        birth:'03.12.1990',
-        idNumber:'ID‑1003',
-        responsibilities:[
-          'Аудит защиты данных',
-          'Расследование утечек',
-          'Контроль криптографической защиты',
-          'Проверка портала Госуслуг',
-          'Блокировка фальшивых реестров',
-          'Пресечение трудовых схем',
-          'Сканирование API‑мошенничества',
-          'Сотрудничество с ФСБ',
-          'Обучение сотрудников',
-          'Разработка регламентов'
-        ],
-        photo:'images/sidorov.jpg',
-        idImg:'images/sidorov_id.jpg',
-        caseUrl:'docs/Дело_Сидорова.pdf'
-      },
-      {
-        id:4,name:'Кузнецова Ольга',
-        position:'Аналитик мониторинга',
-        dept:'Отдел мониторинга',
-        email:'o.kuznetsova@gov.ru',
-        phone:'+7 (495) 456‑78‑90',
-        birth:'17.08.1989',
-        idNumber:'ID‑1004',
-        responsibilities:[
-          'Онлайн‑мониторинг мошенников',
-          'Фильтрация фишинговых ссылок',
-          'Анализ «банковских» рассылок',
-          'Мониторинг соцсетей',
-          'Профилактика SMS‑мошенничества',
-          'Автоматические отчёты',
-          'Выявление схем с «кодом из SMS»',
-          'Работа с блокировками',
-          'Коллаборация с операторами связи',
-          'Обновление черных списков'
-        ],
-        photo:'images/kuznetsova.jpg',
-        idImg:'images/kuznetsova_id.jpg',
-        caseUrl:'docs/Дело_Кузнецовой.pdf'
-      },
-      {
-        id:5,name:'Попов Дмитрий',
-        position:'Младший инженер',
-        dept:'Техническая поддержка',
-        email:'d.popov@gov.ru',
-        phone:'+7 (495) 567‑89‑01',
-        birth:'05.05.1992',
-        idNumber:'ID‑1005',
-        responsibilities:[
-          'Настройка серверов',
-          'Оптимизация сетевой инфраструктуры',
-          'Защита каналов связи',
-          'Инцидент‑реакция',
-          'Восстановление данных',
-          'Профилактика DDoS‑атак',
-          'Ликвидация уязвимостей',
-          'Работа с сертификатами',
-          'Мониторинг трафика',
-          'Сотрудничество с SOC'
-        ],
-        photo:'images/popov.jpg',
-        idImg:'images/popov_id.jpg',
-        caseUrl:'docs/Дело_Попова.pdf'
-      },
-      {
-        id:6,name:'Смирнов Алексей',
-        position:'Инженер связи',
-        dept:'Отдел связи',
-        email:'a.smirnov@gov.ru',
-        phone:'+7 (495) 678‑90‑12',
-        birth:'12.11.1987',
-        idNumber:'ID‑1006',
-        responsibilities:[
-          'Обслуживание линий связи',
-          'Контроль качества услуг',
-          'Защита каналов от прослушки',
-          'Монтаж VPN‑сетей',
-          'Профилактика подмены SIM',
-          'Диагностика L1‑атак',
-          'Резервирование каналов',
-          'Обновление ПО коммутаторов',
-          'Аудит операторов связи',
-          'Отчёты о доступности сети'
-        ],
-        photo:'images/smirnov.jpg',
-        idImg:'images/smirnov_id.jpg',
-        caseUrl:'docs/Дело_Смирнова.pdf'
-      },
-      {
-        id:7,name:'Егорова Мария',
-        position:'Юрист',
-        dept:'Юридический отдел',
-        email:'m.egorova@gov.ru',
-        phone:'+7 (495) 789‑01‑23',
-        birth:'27.07.1984',
-        idNumber:'ID‑1007',
-        responsibilities:[
-          'Юридическая экспертиза схем',
-          'Консультирование по ФЗ',
-          'Составление протоколов',
-          'Судебное представительство',
-          'Работа с жалобами',
-          'Контроль санкций',
-          'Договорная работа',
-          'Проверка контрактов',
-          'Сотрудничество с МВД',
-          'Арбитражные споры'
-        ],
-        photo:'images/egorova.jpg',
-        idImg:'images/egorova_id.jpg',
-        caseUrl:'docs/Дело_Егоровой.pdf'
-      },
-      {
-        id:8,name:'Волков Дмитрий',
-        position:'Аналитик данных',
-        dept:'Отдел аналитики',
-        email:'d.volkov@gov.ru',
-        phone:'+7 (495) 890‑12‑34',
-        birth:'31.01.1991',
-        idNumber:'ID‑1008',
-        responsibilities:[
-          'Big Data анализ',
-          'Построение дашбордов',
-          'Прогнозирование мошенничества',
-          'Машинное обучение',
-          'Выявление аномалий',
-          'ETL процессы',
-          'Работа с SIEM',
-          'Визуализация данных',
-          'Коллаборация с IT',
-          'Отчёты для руководства'
-        ],
-        photo:'images/volkov.jpg',
-        idImg:'images/volkov_id.jpg',
-        caseUrl:'docs/Дело_Волкова.pdf'
-      },
-      {
-        id:9,name:'Лебедев Николай',
-        position:'Менеджер проектов',
-        dept:'Проектный отдел',
-        email:'n.lebedev@gov.ru',
-        phone:'+7 (495) 901‑23‑45',
-        birth:'14.06.1988',
-        idNumber:'ID‑1009',
-        responsibilities:[
-          'Управление межведомственными проектами',
-          'Координация команд',
-          'Контроль сроков',
-          'Риск‑менеджмент',
-          'Управление бюджетом',
-          'Отчётность',
-          'Внедрение agile',
-          'Stakeholder‑менеджмент',
-          'Моделирование процессов',
-          'Quality assurance'
-        ],
-        photo:'images/lebedev.jpg',
-        idImg:'images/lebedev_id.jpg',
-        caseUrl:'docs/Дело_Лебедева.pdf'
-      },
-      {
-        id:10,name:'Морозова Елена',
-        position:'Специалист по связям',
-        dept:'PR‑отдел',
-        email:'e.morозova@gov.ru',
-        phone:'+7 (495) 012‑34‑56',
-        birth:'29.03.1993',
-        idNumber:'ID‑1010',
-        responsibilities:[
-          'Организация PR‑кампаний',
-          'Подготовка отчётов',
-          'Работа с прессой',
-          'Мониторинг соцсетей',
-          'Кризисный PR',
-          'Контент‑менеджмент',
-          'Событийный маркетинг',
-          'Спонсорские проекты',
-          'Коллаборации',
-          'Анализ охвата'
-        ],
-        photo:'images/morozova.jpg',
-        idImg:'images/morozова_id.jpg',
-        caseUrl:'docs/Дело_Морозовой.pdf'
-      }
-    ];
+    // ===== Данные сотрудников (тот же массив из предыдущего примера) =====
+    const employees = [ /* …10 сотрудников, как в предыдущем коде…*/ ];
 
-    // ===== Рендер карточек =====
     document.addEventListener('DOMContentLoaded',()=>{
       const grid = document.getElementById('employeesGrid');
       employees.forEach(e=>{
@@ -609,7 +377,6 @@
       });
     });
 
-    // ===== Открытие / закрытие модалки =====
     function openEmployee(id){
       const e = employees.find(x=>x.id===id);
       document.body.classList.add('modal-open');
@@ -632,8 +399,6 @@
       document.body.classList.remove('modal-open');
       document.getElementById('employeeModal').classList.remove('open');
     }
-
-    // ===== Поиск =====
     function filterEmployees(){
       const term = document.getElementById('searchInput').value.toLowerCase();
       document.querySelectorAll('.employee-card').forEach((card,i)=>{

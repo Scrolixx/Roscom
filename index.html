@@ -13,7 +13,13 @@
 
     /* Шапка */
     header{background:#003366;color:#fff;position:relative;z-index:10}
-    header .container{display:flex;align-items:center;padding:16px 0;justify-content:space-between;flex-wrap:wrap}
+    header .container{
+      display:flex;
+      align-items:center;
+      padding:16px 0;
+      justify-content:space-between;
+      flex-wrap:nowrap;        /* НЕ переносить на десктопе */
+    }
     .logo{height:40px;flex-shrink:0}
     .agency-title{margin-left:16px;font-size:14px;line-height:1.4}
     .nav-toggle{display:none}
@@ -89,15 +95,16 @@
     /* Адаптив */
     @media(max-width:1024px){.leader-list{grid-template-columns:1fr}}
     @media(max-width:767px){
+      header .container{flex-wrap:wrap}       /* В мобильном — снова оборачиваем */
       .nav-toggle-label{display:block;position:absolute;top:16px;right:16px}
       .nav-links{display:none;flex-direction:column;background:#003366;position:absolute;top:100%;left:0;width:100%;padding:8px 0}
       .nav-toggle:checked~.nav-links{display:flex}
       .nav-links a{padding:12px 16px;border-top:1px solid rgba(255,255,255,.2)}
       .employees-grid{grid-template-columns:1fr}
+      .agency-title{font-size:12px;line-height:1.2}
     }
     @media(max-width:480px){
-      header .container{justify-content:flex-start;flex-wrap:nowrap}
-      .agency-title{font-size:12px;line-height:1.2}
+      .modal-content{width:95%}
     }
   </style>
 </head>
@@ -113,12 +120,13 @@
       <input type="checkbox" id="nav-toggle" class="nav-toggle" />
       <label for="nav-toggle" class="nav-toggle-label">☰</label>
       <nav class="nav-links">
+        <!-- теперь Главная идёт первой -->
+        <a href="https://rkn.gov.ru" target="_blank">Главная</a>
         <a href="#about">О ведомстве</a>
         <a href="#employees">Сотрудники</a>
         <a href="#leadership">Руководство</a>
         <a href="#docs">Официальные документы</a>
         <a href="#app-info">Приложение</a>
-        <a href="https://rkn.gov.ru" target="_blank">Главная</a>
       </nav>
     </div>
   </header>
@@ -132,7 +140,6 @@
   </section>
 
   <main class="container">
-
     <!-- О ведомстве -->
     <section id="about" class="block">
       <h2 class="section-title">О ведомстве</h2>
@@ -177,7 +184,7 @@
         <li><a href="docs/Устав_Отдел27.pdf" target="_blank">Устав Отделения №27 ФСБиК</a></li>
         <li><a href="docs/Приказ_Назначение.pdf" target="_blank">Приказ о назначении руководства</a></li>
         <li><a href="docs/Регламент_Работы.pdf" target="_blank">Регламент работы отдела</a></li>
-        <!-- Добавляйте свои PDF-файлы сюда -->
+        <!-- добавить свои PDF сюда -->
       </ul>
     </section>
     <hr class="divider">
@@ -212,7 +219,6 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <!-- Футер -->
@@ -243,21 +249,19 @@
   </div>
 
   <script>
-    // Данные сотрудников с URL на PDF‑дела
     const employees = [
       {id:1,name:'Иванов Сергей',position:'Главный специалист по ИТ',dept:'Управление ИТ и цифровизации',email:'s.ivanov@gov.ru',phone:'+74951234567',birth:'15.04.1980',idNumber:'ID-1001',responsibilities:['Внедрение системы документооборота','Разработка протокола шифрования'],photo:'images/ivanov.jpg',idImg:'images/ivanov_id.jpg',caseUrl:'docs/Дело_Иванова.pdf'},
       {id:2,name:'Петров Иван',position:'Специалист по коммуникациям',dept:'Управление СМИ',email:'i.petrov@gov.ru',phone:'+74952345678',birth:'22.09.1986',idNumber:'ID-1002',responsibilities:['Организация пресс-конференций','Гайдлайны СМИ'],photo:'images/petrov.jpg',idImg:'images/petrov_id.jpg',caseUrl:'docs/Дело_Петрова.pdf'},
       {id:3,name:'Сидоров Алексей',position:'Специалист по защите данных',dept:'Отдел ПД',email:'a.sidorov@gov.ru',phone:'+74953456789',birth:'03.12.1990',idNumber:'ID-1003',responsibilities:['Аудит защиты ПД','Внедрение протоколов шифрования'],photo:'images/sidorov.jpg',idImg:'images/sidorov_id.jpg',caseUrl:'docs/Дело_Сидорова.pdf'},
       {id:4,name:'Кузнецова Ольга',position:'Аналитик мониторинга',dept:'Отдел мониторинга',email:'o.kuznetsova@gov.ru',phone:'+74954567890',birth:'17.08.1989',idNumber:'ID-1004',responsibilities:['Онлайн-мониторинг','Ежеквартальные отчёты'],photo:'images/kuznetsova.jpg',idImg:'images/kuznetsova_id.jpg',caseUrl:'docs/Дело_Кузнецовой.pdf'},
-      {id:5,name:'Попов Дмитрий',position:'Младший инженер',dept:'Техническая поддержка',email:'d.popov@gov.ru',phone:'+74955678901',birth:'05.05.1992',idNumber:'ID-1005',responsibilities:['Настройка серверов','Оптимизация сети'],photo:'images/popov.jpg',idImg:'images/popov_id.jpg',caseUrl:'docs/Дело_Попова.pdf'},
-      {id:6,name:'Смирнов Алексей',position:'Инженер связи',dept:'Отдел связи',email:'a.smirнов@gov.ru',phone:'+74956789012',birth:'12.11.1987',idNumber:'ID-1006',responsibilities:['Обслуживание магистральных линий','Контроль качества'],photo:'images/smirнов.jpg',idImg:'images/sмирнов_id.jpg',caseUrl:'docs/Дело_Смирнова.pdf'},
-      {id:7,name:'Егорова Мария',position:'Юрист',dept:'Юридический отдел',email:'m.egorova@gov.ru',phone:'+74957890123',birth:'27.07.1984',idNumber:'ID-1007',responsibilities:['Юридическая экспертиза','Консультирование'],photo:'images/egorova.jpg',idImg:'images/egорова_id.jpg',caseUrl:'docs/Дело_Егоровой.pdf'},
-      {id:8,name:'Волков Дмитрий',position:'Аналитик данных',dept:'Отдел аналитики',email:'d.volkov@gov.ru',phone:'+74958901234',birth:'31.01.1991',idNumber:'ID-1008',responsibilities:['Big Data','Дашборды'],photo:'images/volkov.jpg',idImg:'images/волков_id.jpg',caseUrl:'docs/Дело_Волкова.pdf'},
-      {id:9,name:'Лебедев Николай',position:'Менеджер проектов',dept:'Проектный отдел',email:'n.lebedev@gov.ru',phone:'+74959012345',birth:'14.06.1988',idNumber:'ID-1009',responsibilities:['Межведомственные проекты','Координация команд'],photo:'images/lebedev.jpg',idImg:'images/ле бедев_id.jpg',caseUrl:'docs/Дело_Лебедева.pdf'},
-      {id:10,name:'Морозова Елена',position:'Специалист по связям',dept:'PR-отдел',email:'e.morозova@gov.ru',phone:'+74950123456',birth:'29.03.1993',idNumber:'ID-1010',responsibilities:['PR-кампании','PR-отчёты'],photo:'images/morozova.jpg',idImg:'images/морозова_id.jpg',caseUrl:'docs/Дело_Морозовой.pdf'}
+      {id:5,name:'Попов Дмитрий',position:'Младший инженер',dept:'Техническая поддержка',email:'d.popов@gov.ru',phone:'+74955678901',birth:'05.05.1992',idNumber:'ID-1005',responsibilities:['Настройка серверов','Оптимизация сети'],photo:'images/popov.jpg',idImg:'images/popov_id.jpg',caseUrl:'docs/Дело_Попова.pdf'},
+      {id:6,name:'Смирнов Алексей',position:'Инженер связи',dept:'Отдел связи',email:'a.smirнов@gov.ru',phone:'+74956789012',birth:'12.11.1987',idNumber:'ID-1006',responsibilities:['Обслуживание магистральных линий','Контроль качества'],photo:'images/smirнов.jpg',idImg:'images/смирнов_id.jpg',caseUrl:'docs/Дело_Смирнова.pdf'},
+      {id:7,name:'Егорова Мария',position:'Юрист',dept:'Юридический отдел',email:'m.egorova@gov.ru',phone:'+74957890123',birth:'27.07.1984',idNumber:'ID-1007',responsibilities:['Юридическая экспертиза','Консультирование'],photo:'images/egorova.jpg',idImg:'images/егорова_id.jpg',caseUrl:'docs/Дело_Егоровой.pdf'},
+      {id:8,name:'Волков Дмитрий',position:'Аналитик данных',dept:'Отдел аналитики',email:'d.volков@gov.ru',phone:'+74958901234',birth:'31.01.1991',idNumber:'ID-1008',responsibilities:['Big Data','Дашборды'],photo:'images/volkov.jpg',idImg:'images/волков_id.jpg',caseUrl:'docs/Дело_Волкова.pdf'},
+      {id:9,name:'Лебедев Николай',position:'Менеджер проектов',dept:'Проектный отдел',email:'n.lebedev@gov.ru',phone:'+74959012345',birth:'14.06.1988',idNumber:'ID-1009',responsibilities:['Межведомственные проекты','Координация команд'],photo:'images/lebedev.jpg',idImg:'images/лебедев_id.jpg',caseUrl:'docs/Дело_Лебедева.pdf'},
+      {id:10,name:'Морозова Елена',position:'Специалист по связям',dept:'PR-отдел',email:'e.mорозова@gov.ru',phone:'+74950123456',birth:'29.03.1993',idNumber:'ID-1010',responsibilities:['PR-кампании','PR-отчёты'],photo:'images/morozova.jpg',idImg:'images/морозова_id.jpg',caseUrl:'docs/Дело_Морозовой.pdf'}
     ];
 
-    // Рендерим
     document.addEventListener('DOMContentLoaded',()=>{
       const grid=document.getElementById('employeesGrid');
       employees.forEach(e=>{
@@ -274,7 +278,6 @@
       });
     });
 
-    // Открыть/закрыть модалку сотрудника
     function openEmployee(id){
       const e=employees.find(x=>x.id===id);
       document.body.classList.add('modal-open');
@@ -298,7 +301,6 @@
       document.body.classList.remove('modal-open');
     }
 
-    // Фильтрация
     function filterEmployees(){
       const term=document.getElementById('searchInput').value.toLowerCase();
       document.querySelectorAll('.employee-card').forEach((c,i)=>{

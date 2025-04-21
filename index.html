@@ -21,33 +21,10 @@
     .logo{height:40px;flex-shrink:0;}
     .agency-title{margin-left:12px;font-size:14px;line-height:1.3;flex-shrink:1;white-space:normal;}
     .nav-toggle{position:absolute;top:16px;right:16px;width:32px;height:32px;opacity:0;z-index:10;}
-    .nav-toggle-label {
-      display: none;
-      color: #fff;
-      font-size: 24px;
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      cursor: pointer;
-     }
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      margin-left: auto;
-      z-index: 1;
-    }
-    .nav-links a {
-      color: #fff;
-      font-weight: 600;
-      white-space: normal;      /* разрешает переносить длинные слова */
-      text-decoration: none;    /* убираем подчёркивание */
-      transition: opacity 0.2s;
-     }
-/* убираем подчёркивание при ховере и слегка меняем прозрачность */
-     .nav-links a:hover {
-      opacity: 0.8;
-      text-decoration: none;
-     }
+    .nav-toggle-label{display:none;color:#fff;font-size:24px;position:absolute;top:16px;right:16px;cursor:pointer;}
+    .nav-links{display:flex;gap:24px;margin-left:auto;z-index:1;}
+    .nav-links a{color:#fff;font-weight:600;white-space:normal;text-decoration:none;transition:opacity .2s;}
+    .nav-links a:hover{opacity:.8;text-decoration:none;}
 
     /* ===== HERO ===== */
     .hero{background:linear-gradient(90deg,#003366,#1a4d80);color:#fff;text-align:center;padding:40px 0;}
@@ -59,8 +36,8 @@
     h2.section-title{color:#003366;font-size:24px;margin-bottom:12px;}
     .divider{height:2px;background:#003366;border:none;margin:32px 0;}
 
-    /* ===== «Важное» ===== */
-    #about h3{margin-top:16px;color:#1a4d80;font-size:18px;text-transform: none;}
+    /* ===== Важное ===== */
+    #about h3{margin-top:16px;color:#1a4d80;font-size:18px;text-transform:none;}
     #about p,#about ul{margin-bottom:8px;color:#555;}
     #about ul{list-style:disc;margin-left:20px;}
 
@@ -78,11 +55,11 @@
 
     /* ===== ОФИЦИАЛЬНЫЕ ДОКУМЕНТЫ ===== */
     .docs-list li{margin-bottom:8px;}
-    .docs-list a{color:#1a4d80;font-size:14px;}
-    .docs-list a:hover{text-decoration: underline;;}
+    .docs-list a{color:#1a4d80;font-size:14px;text-decoration:none;transition:opacity .2s;}
+    .docs-list a:hover{text-decoration:underline;opacity:.8;}
 
     /* ===== ПРИЛОЖЕНИЕ ===== */
-    .download-btn{display:inline-block;text-decoration: none !important;margin-top:16px;padding:12px 24px;background:#003366;color:#fff;font-weight:600;border-radius:4px;transition:background .2s;}
+    .download-btn{display:inline-block;margin-top:16px;padding:12px 24px;background:#003366;color:#fff;font-weight:600;border-radius:4px;transition:background .2s;text-decoration:none;}
     .download-btn:hover{background:#1a4d80;}
 
     /* ===== РУКОВОДСТВО ===== */
@@ -156,7 +133,6 @@
   </section>
 
   <main class="container">
-
     <!-- Важное -->
     <section id="about" class="block">
       <h2 class="section-title">Важное</h2>
@@ -199,11 +175,11 @@
         <li><a href="docs/Устав_Отдел27.pdf" target="_blank">Устав отделения № 27</a></li>
         <li><a href="docs/Приказ_Руководство.pdf" target="_blank">Приказ о назначении руководства</a></li>
         <li><a href="docs/Регламент_Работы.pdf" target="_blank">Регламент работы отдела</a></li>
+        <li><a href="docs/Годовой_Отчет_2024.pdf" target="_blank">Годовой отчёт за 2024 год</a></li>
         <li><a href="docs/Положение_ПД.pdf" target="_blank">Положение по персональным данным</a></li>
-        <li><a href="docs/Безопасность_ИТ.pdf" target="_blank">Политика ИТ‑безопасности</a></li>
+        <li><a href="docs/Политика_ИТ_Безопасности.pdf" target="_blank">Политика ИТ‑безопасности</a></li>
         <li><a href="docs/Антифишинг.pdf" target="_blank">Методика антифишинга</a></li>
         <li><a href="docs/Отчет_Антиспам.pdf" target="_blank">Отчёт по антиспам‑инициативам</a></li>
-        <li><a href="docs/РусСтандартБезоп.pdf" target="_blank">Технический регламент «Русский стандарт безопасности»</a></li>
       </ul>
     </section>
     <hr class="divider" />
@@ -238,7 +214,6 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <!-- Футер -->
@@ -269,156 +244,20 @@
   </div>
 
   <script>
-    // ===== ДАННЫЕ СОТРУДНИКОВ =====
-    const employees = [
-      {
-        id: 1,
-        name: 'Иванов Сергей',
-        position: 'Главный специалист по ИТ',
-        dept: 'Управление ИТ и цифровизации',
-        email: 's.ivanov@gov.ru',
-        phone: '+7(495)123-45-67',
-        birth: '15.04.1980',
-        idNumber: 'ID-1001',
-        responsibilities: ['Внедрение ЭДО','Шифрование данных'],
-        photo: 'images/ivanov.jpg',
-        idImg: 'images/ivanov_id.jpg',
-        caseUrl: 'cases/ivanov_case.pdf'
-      },
-      {
-        id: 2,
-        name: 'Петров Иван',
-        position: 'Специалист по коммуникациям',
-        dept: 'Управление СМИ',
-        email: 'i.petrov@gov.ru',
-        phone: '+7(495)234-56-78',
-        birth: '22.09.1986',
-        idNumber: 'ID-1002',
-        responsibilities: ['Пресс-конференции','Гайдлайны СМИ'],
-        photo: 'images/petrov.jpg',
-        idImg: 'images/petrov_id.jpg',
-        caseUrl: 'cases/petrov_case.pdf'
-      },
-      {
-        id: 3,
-        name: 'Сидоров Алексей',
-        position: 'Специалист по защите данных',
-        dept: 'Отдел ПД',
-        email: 'a.sidorov@gov.ru',
-        phone: '+7(495)345-67-89',
-        birth: '03.12.1990',
-        idNumber: 'ID-1003',
-        responsibilities: ['Аудит ПД','Протоколы шифрования'],
-        photo: 'images/sidorov.jpg',
-        idImg: 'images/sidorov_id.jpg',
-        caseUrl: 'cases/sidorov_case.pdf'
-      },
-      {
-        id: 4,
-        name: 'Кузнецова Ольга',
-        position: 'Аналитик мониторинга',
-        dept: 'Отдел мониторинга',
-        email: 'o.kuznetsova@gov.ru',
-        phone: '+7(495)456-78-90',
-        birth: '17.08.1989',
-        idNumber: 'ID-1004',
-        responsibilities: ['Онлайн-мониторинг','Ежеквартальные отчёты'],
-        photo: 'images/kuznetsova.jpg',
-        idImg: 'images/kuznetsova_id.jpg',
-        caseUrl: 'cases/kuznetsova_case.pdf'
-      },
-      {
-        id: 5,
-        name: 'Попов Дмитрий',
-        position: 'Младший инженер',
-        dept: 'Техподдержка',
-        email: 'd.popov@gov.ru',
-        phone: '+7(495)567-89-01',
-        birth: '05.05.1992',
-        idNumber: 'ID-1005',
-        responsibilities: ['Серверы','Сети'],
-        photo: 'images/popov.jpg',
-        idImg: 'images/popov_id.jpg',
-        caseUrl: 'cases/popov_case.pdf'
-      },
-      {
-        id: 6,
-        name: 'Смирнов Алексей',
-        position: 'Инженер связи',
-        dept: 'Отдел связи',
-        email: 'a.smirnov@gov.ru',
-        phone: '+7(495)678-90-12',
-        birth: '12.11.1987',
-        idNumber: 'ID-1006',
-        responsibilities: ['Магистральные линии','Контроль качества'],
-        photo: 'images/smirnov.jpg',
-        idImg: 'images/smirnov_id.jpg',
-        caseUrl: 'cases/smirnov_case.pdf'
-      },
-      {
-        id: 7,
-        name: 'Егорова Мария',
-        position: 'Юрист',
-        dept: 'Юридический отдел',
-        email: 'm.egorova@gov.ru',
-        phone: '+7(495)789-01-23',
-        birth: '27.07.1984',
-        idNumber: 'ID-1007',
-        responsibilities: ['Экспертиза документов','Консультирование'],
-        photo: 'images/egorova.jpg',
-        idImg: 'images/egorova_id.jpg',
-        caseUrl: 'cases/egorova_case.pdf'
-      },
-      {
-        id: 8,
-        name: 'Волков Дмитрий',
-        position: 'Аналитик данных',
-        dept: 'Отдел аналитики',
-        email: 'd.volkov@gov.ru',
-        phone: '+7(495)890-12-34',
-        birth: '31.01.1991',
-        idNumber: 'ID-1008',
-        responsibilities: ['Big Data','Дашборды'],
-        photo: 'images/volkov.jpg',
-        idImg: 'images/volkov_id.jpg',
-        caseUrl: 'cases/volkov_case.pdf'
-      },
-      {
-        id: 9,
-        name: 'Лебедев Николай',
-        position: 'Менеджер проектов',
-        dept: 'Проектный отдел',
-        email: 'n.lebedev@gov.ru',
-        phone: '+7(495)901-23-45',
-        birth: '14.06.1988',
-        idNumber: 'ID-1009',
-        responsibilities: ['Межведомственные проекты','Координация команд'],
-        photo: 'images/lebedev.jpg',
-        idImg: 'images/lebedev_id.jpg',
-        caseUrl: 'cases/lebedev_case.pdf'
-      },
-      {
-        id: 10,
-        name: 'Морозова Елена',
-        position: 'Специалист по связям',
-        dept: 'PR-отдел',
-        email: 'e.morozova@gov.ru',
-        phone: '+7(495)012-34-56',
-        birth: '29.03.1993',
-        idNumber: 'ID-1010',
-        responsibilities: ['PR-кампании','PR-отчёты'],
-        photo: 'images/morozova.jpg',
-        idImg: 'images/morozova_id.jpg',
-        caseUrl: 'cases/morozova_case.pdf'
-      }
-    ];
+    // —————————— ДИНАМИЧЕСКАЯ ПОДГРУЗКА employees.json ——————————
+    const owner = 'YOUR_GITHUB_USERNAME'; // замените на ваш GitHub‑логин
+    const repo  = 'rkn-staff';            // замените на имя репозитория
+    const path  = 'employees.json';       // имя JSON‑файла в корне
+    const apiUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}`;
+    let employees = [];
 
-    document.addEventListener('DOMContentLoaded',()=>{
+    function renderEmployees() {
       const grid = document.getElementById('employeesGrid');
-      employees.forEach(e=>{
+      grid.innerHTML = '';
+      employees.forEach(e => {
         const card = document.createElement('article');
-        card.className='employee-card';
-        card.innerHTML=`
+        card.className = 'employee-card';
+        card.innerHTML = `
           <img src="${e.photo}" alt="${e.name}" class="employee-photo">
           <div class="employee-name">${e.name}</div>
           <div class="employee-position">${e.position}</div>
@@ -427,34 +266,52 @@
         `;
         grid.appendChild(card);
       });
-    });
+    }
 
-    function openEmployee(id){
-      const e = employees.find(x=>x.id===id);
+    fetch(apiUrl)
+      .then(res => {
+        if (!res.ok) throw new Error(res.statusText);
+        return res.json();
+      })
+      .then(data => {
+        employees = data;
+        renderEmployees();
+      })
+      .catch(err => {
+        console.error('Не удалось загрузить employees.json:', err);
+        // при желании — рендерить статический fallback здесь
+      });
+    // ———————————————————————————————————————————————————————————
+
+    // ===== ОТКРЫТИЕ И ЗАКРЫТИЕ МОДАЛКИ =====
+    function openEmployee(id) {
+      const e = employees.find(x => x.id === id);
       document.body.classList.add('modal-open');
-      document.getElementById('modalName').textContent=e.name;
-      document.getElementById('modalPosition').textContent=e.position;
-      document.getElementById('modalDept').textContent=e.dept;
+      document.getElementById('modalName').textContent   = e.name;
+      document.getElementById('modalPosition').textContent = e.position;
+      document.getElementById('modalDept').textContent   = e.dept;
       const em = document.getElementById('modalEmail');
-      em.textContent=e.email; em.href=`mailto:${e.email}`;
+      em.textContent = e.email; em.href = `mailto:${e.email}`;
       const ph = document.getElementById('modalPhone');
-      ph.textContent=e.phone; ph.href=`tel:${e.phone.replace(/\D/g,'')}`;
-      document.getElementById('modalBirth').textContent=e.birth;
-      document.getElementById('modalIdNum').textContent=e.idNumber;
-      document.getElementById('modalResp').textContent=e.responsibilities.join(', ');
+      ph.textContent = e.phone; ph.href = `tel:${e.phone.replace(/\D/g,'')}`;
+      document.getElementById('modalBirth').textContent  = e.birth;
+      document.getElementById('modalIdNum').textContent  = e.idNumber;
+      document.getElementById('modalResp').textContent   = e.responsibilities.join(', ');
       const img = document.getElementById('modalIdImg');
-      img.src=e.idImg; img.alt=`Удостоверение ${e.name}`;
-      document.getElementById('modalCaseLink').href=e.caseUrl;
+      img.src = e.idImg; img.alt = `Удостоверение ${e.name}`;
+      document.getElementById('modalCaseLink').href = e.caseUrl;
       document.getElementById('employeeModal').classList.add('open');
     }
-    function closeEmployee(){
+    function closeEmployee() {
       document.body.classList.remove('modal-open');
       document.getElementById('employeeModal').classList.remove('open');
     }
-    function filterEmployees(){
+
+    // ===== ФИЛЬТРАЦИЯ =====
+    function filterEmployees() {
       const term = document.getElementById('searchInput').value.toLowerCase();
-      document.querySelectorAll('.employee-card').forEach((card,i)=>{
-        card.style.display = employees[i].name.toLowerCase().includes(term)?'':'none';
+      document.querySelectorAll('.employee-card').forEach((card,i) => {
+        card.style.display = employees[i].name.toLowerCase().includes(term) ? '' : 'none';
       });
     }
   </script>

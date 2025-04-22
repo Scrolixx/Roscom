@@ -349,16 +349,24 @@
 
   <!-- Модалка документа -->
  <div id="docModal" class="modal">
-   <div class="modal-content">
-     <div class="modal-header">
-       <h2 id="docTitle"></h2>
-       <button class="modal-close" onclick="closeDoc()">×</button>
-      </div>
-     <div class="modal-body">
-       <iframe id="docFrame" src="" style="width:100%;height:80vh;border:none;"></iframe>
-     </div>
-   </div>
- </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="docTitle"></h2>
+      <button class="modal-close" onclick="closeDoc()">×</button>
+    </div>
+    <div class="modal-body">
+      <embed id="docFrame"
+             type="application/pdf"
+             src=""
+             style="width:100%;height:80vh;"
+      >
+      <!-- В fallback-блоке можно предложить скачать -->
+      <p>Ваш браузер не поддерживает встроенный просмотр PDF. 
+         <a id="docFrameLink" href="">Скачать документ.</a>
+      </p>
+    </div>
+  </div>
+</div>
 
   <script>
     // ===== ДАННЫЕ СОТРУДНИКОВ =====
@@ -523,7 +531,12 @@
 
 function openDoc(url, title) {
   document.getElementById('docTitle').textContent = title;
-  document.getElementById('docFrame').src = url;
+  // для <embed> у нас атрибут src работает также
+  const embed = document.getElementById('docFrame');
+  embed.src = url;
+  // обновим ссылку для скачивания на случай, если embed не поддерживается
+  document.getElementById('docFrameLink').href = url;
+
   document.body.classList.add('modal-open');
   document.getElementById('docModal').classList.add('open');
 }

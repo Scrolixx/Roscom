@@ -208,6 +208,24 @@
   </div>
 </section>
 
+    <hr class="divider" />
+
+    <!-- Сотрудники -->
+    <section id="employees" class="block">
+      <h2 class="section-title">Сотрудники</h2>
+      <div class="search">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Поиск по ФИО"
+          oninput="filterEmployees()"
+        />
+      </div>
+      <div id="employeesGrid" class="employees-grid"></div>
+    </section>
+
+    <hr class="divider" />
+    
     <!-- Официальные документы -->
     <section id="docs" class="block">
       <h2 class="section-title">Официальные документы</h2>

@@ -231,19 +231,60 @@
     <hr class="divider" />
     
     <!-- Официальные документы -->
-    <section id="docs" class="block">
-      <h2 class="section-title">Официальные документы</h2>
-      <ul class="docs-list">
-        <li><a href="docs/Устав_Отдел27.pdf" target="_blank">Устав отделения № 27</a></li>
-        <li><a href="docs/Приказ_Руководство.pdf" target="_blank">Приказ о назначении руководства</a></li>
-        <li><a href="docs/Регламент_Работы.pdf" target="_blank">Регламент работы отдела</a></li>
-        <li><a href="docs/Положение_ПД.pdf" target="_blank">Положение по персональным данным</a></li>
-        <li><a href="docs/Безопасность_ИТ.pdf" target="_blank">Политика ИТ‑безопасности</a></li>
-        <li><a href="docs/Антифишинг.pdf" target="_blank">Методика антифишинга</a></li>
-        <li><a href="docs/Отчет_Антиспам.pdf" target="_blank">Отчёт по антиспам‑инициативам</a></li>
-        <li><a href="docs/РусСтандартБезоп.pdf" target="_blank">Технический регламент «Русский стандарт безопасности»</a></li>
-      </ul>
-    </section>
+<section id="docs" class="block">
+  <h2 class="section-title">Официальные документы</h2>
+  <ul class="docs-list">
+    <li>
+      <a href="#"
+         onclick="openDoc('docs/Устав_Отдел27.pdf', 'Устав отделения № 27'); return false;">
+        Устав отделения № 27
+      </a>
+    </li>
+    <li>
+      <a href="#"
+         onclick="openDoc('docs/Приказ_Руководство.pdf', 'Приказ о назначении руководства'); return false;">
+        Приказ о назначении руководства
+      </a>
+    </li>
+    <li>
+      <a href="#"
+         onclick="openDoc('docs/Регламент_Работы.pdf', 'Регламент работы отдела'); return false;">
+        Регламент работы отдела
+      </a>
+    </li>
+    <li>
+      <a href="#"
+         onclick="openDoc('docs/Положение_ПД.pdf', 'Положение по персональным данным'); return false;">
+        Положение по персональным данным
+      </a>
+    </li>
+    <li>
+      <a href="#"
+         onclick="openDoc('docs/Безопасность_ИТ.pdf', 'Политика ИТ‑безопасности'); return false;">
+        Политика ИТ‑безопасности
+      </a>
+    </li>
+    <li>
+      <a href="#"
+         onclick="openDoc('docs/Антифишинг.pdf', 'Методика антифишинга'); return false;">
+        Методика антифишинга
+      </a>
+    </li>
+    <li>
+      <a href="#"
+         onclick="openDoc('docs/Отчет_Антиспам.pdf', 'Отчёт по антиспам‑инициативам'); return false;">
+        Отчёт по антиспам‑инициативам
+      </a>
+    </li>
+    <li>
+      <a href="#"
+         onclick="openDoc('docs/РусСтандартБезоп.pdf', 'Технический регламент «Русский стандарт безопасности»'); return false;">
+        Технический регламент «Русский стандарт безопасности»
+      </a>
+    </li>
+  </ul>
+</section>
+
     <hr class="divider" />
 
     <!-- Приложение -->
@@ -305,6 +346,19 @@
       </div>
     </div>
   </div>
+
+  <!-- Модалка документа -->
+ <div id="docModal" class="modal">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h2 id="docTitle"></h2>
+       <button class="modal-close" onclick="closeDoc()">×</button>
+      </div>
+     <div class="modal-body">
+       <iframe id="docFrame" src="" style="width:100%;height:80vh;border:none;"></iframe>
+     </div>
+   </div>
+ </div>
 
   <script>
     // ===== ДАННЫЕ СОТРУДНИКОВ =====
@@ -467,6 +521,21 @@
       });
     });
 
+function openDoc(url, title) {
+  document.getElementById('docTitle').textContent = title;
+  document.getElementById('docFrame').src = url;
+  document.body.classList.add('modal-open');
+  document.getElementById('docModal').classList.add('open');
+}
+
+function closeDoc() {
+  document.body.classList.remove('modal-open');
+  document.getElementById('docModal').classList.remove('open');
+  // очищаем src, чтобы при следующем открытии PDF загружался заново
+  document.getElementById('docFrame').src = '';
+}
+ 
+    
     function openEmployee(id){
       const e = employees.find(x=>x.id===id);
       document.body.classList.add('modal-open');

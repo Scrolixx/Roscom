@@ -531,12 +531,10 @@
 
 function openDoc(url, title) {
   document.getElementById('docTitle').textContent = title;
-  // для <embed> у нас атрибут src работает также
+  const cleanUrl = url + '#toolbar=0&navpanes=0&scrollbar=0';
   const embed = document.getElementById('docFrame');
-  embed.src = url;
-  // обновим ссылку для скачивания на случай, если embed не поддерживается
+  embed.src = cleanUrl;
   document.getElementById('docFrameLink').href = url;
-
   document.body.classList.add('modal-open');
   document.getElementById('docModal').classList.add('open');
 }
@@ -544,10 +542,8 @@ function openDoc(url, title) {
 function closeDoc() {
   document.body.classList.remove('modal-open');
   document.getElementById('docModal').classList.remove('open');
-  // очищаем src, чтобы при следующем открытии PDF загружался заново
   document.getElementById('docFrame').src = '';
-}
- 
+} 
     
     function openEmployee(id){
       const e = employees.find(x=>x.id===id);

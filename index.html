@@ -531,29 +531,24 @@
       });
     });
 
-  function openDoc(url, title) {
-    // Заголовок модалки
-    document.getElementById('docTitle').textContent = title;
+function openDoc(url, title) {
+  document.getElementById('docTitle').textContent = title;
 
-    // Кодируем путь к PDF, чтобы кириллица не мешала
-    const encodedUrl = encodeURIComponent(window.location.origin + '/' + url);
+  // кодируем полный URL для PDF.js
+  const fullUrl = encodeURIComponent(window.location.href.replace(/\/[^\/]*$/, '/') + url);
 
-    // Формируем локальный путь к pdfjs/viewer.html
-    // viewer.html сам подтянет все свои скрипты из папки pdfjs/
-    const viewerPath = `/pdfjs/viewer.html?file=${encodedUrl}`;
+  // относительный путь к viewer.html внутри папки pdfjs
+  const viewerPath = 'pdfjs/viewer.html?file=' + fullUrl;
 
-    // Вставляем его в iframe
-    const iframe = document.getElementById('docFrame');
-    iframe.src = viewerPath;
+  const iframe = document.getElementById('docFrame');
+  iframe.src = viewerPath;
 
-    // Активация модалки
-    document.body.classList.add('modal-open');
-    document.getElementById('docModal').classList.add('open');
+  // обновляем fallback-ссылку
+  document.getElementById('docFrameLink').href = url;
 
-    // Обновляем ссылку-скачалку на случай, если встроенный просмотр не поддерживается
-    const fallback = document.getElementById('docFrameLink');
-    fallback.href = url;
-  }
+  document.body.classList.add('modal-open');
+  document.getElementById('docModal').classList.add('open');
+}
 
   function closeDoc() {
     document.body.classList.remove('modal-open');

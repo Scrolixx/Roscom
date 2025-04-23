@@ -355,15 +355,17 @@
       <button class="modal-close" onclick="closeDoc()">×</button>
     </div>
     <div class="modal-body">
+      <!-- PDF.js встроенный просмотр -->
       <iframe
-  id="docFrame"
-  src=""
-  style="width:100%;height:80vh;border:none;"
-></iframe>
-<p class="pdf-fallback">
-  Ваш браузер не поддерживает встроенный просмотр PDF. 
-  <a id="docFrameLink" href="">Скачать документ</a>.
-</p>
+        id="docFrame"
+        src=""
+        style="width:100%; height:80vh; border:none;"
+      ></iframe>
+      <!-- fallback для старых браузеров -->
+      <p class="pdf-fallback">
+        Если ваш браузер не поддерживает встроенный просмотр PDF то вы можете -  
+        <a id="docFrameLink" href="">Скачать документ по безопастной ссылке.</a>
+      </p>
     </div>
   </div>
 </div>
@@ -529,30 +531,34 @@
       });
     });
 
-function openDoc(url, title) {
-  document.getElementById('docTitle').textContent = title;
+  function openDoc(url, title) {
+    // Заголовок модалки
+    document.getElementById('docTitle').textContent = title;
 
-  // строим URL для PDF.js-Viewer-а
-  const viewerBase = 'https://mozilla.github.io/pdf.js/web/viewer.html';
-  const pdfUrl     = encodeURIComponent(window.location.origin + '/' + url);
-  const src        = `${viewerBase}?file=${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`;
+    // Кодируем путь к PDF, чтобы кириллица не мешала
+    const encodedUrl = encodeURIComponent(window.location.origin + '/' + url);
 
-  const frame = document.getElementById('docFrame');
-  frame.src = src;
+    // Формируем локальный путь к pdfjs/viewer.html
+    // viewer.html сам подтянет все свои скрипты из папки pdfjs/
+    const viewerPath = `/pdfjs/viewer.html?file=${encodedUrl}`;
 
-  // для самых бедных браузеров — ссылка на скачивание
-  const link = document.getElementById('docFrameLink');
-  link.href  = url;
+    // Вставляем его в iframe
+    const iframe = document.getElementById('docFrame');
+    iframe.src = viewerPath;
 
-  document.body.classList.add('modal-open');
-  document.getElementById('docModal').classList.add('open');
-}
+    // Активация модалки
+    document.body.classList.add('modal-open');
+    document.getElementById('docModal').classList.add('open');
+
+    // Обновляем ссылку-скачалку на случай, если встроенный просмотр не поддерживается
+    const fallback = document.getElementById('docFrameLink');
+    fallback.href = url;
+  }
 
   function closeDoc() {
     document.body.classList.remove('modal-open');
-    const mdl = document.getElementById('docModal');
-    mdl.classList.remove('open');
-    // Чтобы при следующем открытии iframe заново подхватил файл
+    document.getElementById('docModal').classList.remove('open');
+    // Очищаем src, чтобы при повторном открытии загрузился заново
     document.getElementById('docFrame').src = '';
   }
     
